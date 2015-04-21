@@ -8,11 +8,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -81,8 +84,23 @@ public class MyConferences extends Activity {
             JSONParser jsonParser = new JSONParser();
             JSONObject json = jsonParser.makeHttpRequest(MyConferences_URL, "POST", MyConferences);
 
-            int iii = 0;
-            Log.d("JSON_Array",json.toString());
+            try {
+                JSONArray jsonArray = json.getJSONArray("confName");
+                for (int c=0;c<=jsonArray.length();c++){
+                    JSONObject jsonObject = jsonArray.getJSONObject(c);
+                    LinearLayout linearLayout = (LinearLayout) findViewById(R.id.calendar);
+                    TextView confNames = new TextView(MyConferences.this);
+                    confNames.setText(jsonObject.getString("confName"));
+                    linearLayout.addView(confNames);
+                }
+
+                Log.d("JSON_Array",jsonArray.getJSONArray(1).toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+
 
 
             return null;
