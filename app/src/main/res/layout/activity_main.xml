@@ -1,0 +1,80 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/start_background"
+        android:clickable="false"
+        android:gravity="left|right">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="9"
+            android:hint="@string/e_mail"
+            android:id="@+id/editText"
+            android:textColor="#ffffffff"
+            android:layout_above="@+id/editText2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@android:dimen/app_icon_size"
+            android:layout_marginRight="@android:dimen/app_icon_size" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="9"
+            android:hint="@string/password"
+            android:id="@+id/editText2"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="@android:dimen/app_icon_size"
+            android:layout_marginRight="@android:dimen/app_icon_size"
+            android:textColor="#ffffffff" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/log_in"
+            android:id="@+id/button"
+            android:textStyle="bold"
+            android:background="#ff3eb5d6"
+            android:layout_alignWithParentIfMissing="false"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="80dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="@android:dimen/app_icon_size"
+            android:layout_marginRight="@android:dimen/app_icon_size"
+            android:clickable="true"
+            android:focusableInTouchMode="true"
+            android:backgroundTintMode="src_over"
+            android:enabled="true"
+            android:outlineProvider="background"
+            android:theme="@style/Base.TextAppearance.AppCompat.Button" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:src="@mipmap/revconf_logo"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:paddingBottom="@android:dimen/app_icon_size"
+            android:layout_above="@+id/editText" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>
