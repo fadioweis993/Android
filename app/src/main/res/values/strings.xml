@@ -31,5 +31,6 @@
     <string name="list_item_contact_street">Street</string>
 
     <string name="contact_birthday">Enter Birthday</string>
+        <string name="title_activity_conference_info">ConferenceInfo</string>
 
 </resources>

@@ -18,29 +18,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".conferences"
             android:label="Conferences" >
         </activity>
         <activity
             android:name=".MyProfile"
-            android:label="@string/title_activity_my_profile"
-            >
+            android:label="@string/title_activity_my_profile" >
         </activity>
         <activity
             android:name=".MyConferences"
-            android:label="@string/title_activity_my_conferences"
-             >
+            android:label="@string/title_activity_my_conferences" >
         </activity>
-
         <activity
             android:name=".MainActivity2"
             android:label="@string/title_activity_main_activity2" >
         </activity>
-
+        <activity
+            android:name=".ConferenceInfo"
+            android:label="@string/title_activity_conference_info" >
+        </activity>
     </application>
 
 </manifest>
-
-

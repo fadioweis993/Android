@@ -94,7 +94,6 @@ public class MyConferences extends Activity {
                     linearLayout.addView(confNames);
                 }
 
-                Log.d("JSON_Array",jsonArray.getJSONArray(1).toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
