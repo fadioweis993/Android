@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -134,11 +136,17 @@ public class conferences extends Activity {
 
                 String conf = ConfSearch.getText().toString();
                 List<NameValuePair> confs = new ArrayList<NameValuePair>();
-                confs.add(new BasicNameValuePair("confName",conf));
+                confs.add(new BasicNameValuePair("confName",conf + '%'));
 
                 JSONParser jsonParser = new JSONParser();
                 JSONObject json = jsonParser.makeHttpRequest(LOGIN_URL, "POST", confs);
                 String result = json.getString("introduction").toString();
+
+                LinearLayout linearLayout = (LinearLayout) findViewById(R.id.conferences);
+                TextView confResult = new TextView(conferences.this);
+                confResult.setText(result);
+                confResult.setTextSize(15);
+                linearLayout.addView(confResult);
                 Log.d("JSON_I_GOT", result);
                 return result;
 
@@ -153,7 +161,7 @@ public class conferences extends Activity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             pdialog.dismiss();
-            tv = (TextView) findViewById(R.id.ConfToView);
+           //tv = (TextView) findViewById(R.id.ConfToView);
             if (s.equals(null)){
                 Toast.makeText(getApplicationContext(),"Conference not found",Toast.LENGTH_LONG).show();
             }
