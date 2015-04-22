@@ -3,6 +3,7 @@ package edu.psut.reviconf;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.PixelFormat;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -91,6 +92,7 @@ public class MyConferences extends Activity {
                     LinearLayout linearLayout = (LinearLayout) findViewById(R.id.calendar);
                     TextView confNames = new TextView(MyConferences.this);
                     confNames.setText(jsonObject.getString("confName"));
+                    confNames.setTextSize(15);
                     linearLayout.addView(confNames);
                 }
 
