@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -140,15 +141,22 @@ public class conferences extends Activity {
 
                 JSONParser jsonParser = new JSONParser();
                 JSONObject json = jsonParser.makeHttpRequest(LOGIN_URL, "POST", confs);
-                String result = json.getString("introduction").toString();
 
-                LinearLayout linearLayout = (LinearLayout) findViewById(R.id.conferences);
-                TextView confResult = new TextView(conferences.this);
-                confResult.setText(result);
-                confResult.setTextSize(15);
-                linearLayout.addView(confResult);
-                Log.d("JSON_I_GOT", result);
-                return result;
+
+
+                JSONArray jsonArray = json.getJSONArray("conferencesResult");
+                for (int c=0;c<=jsonArray.length();c++){
+                    JSONObject jsonObject = jsonArray.getJSONObject(c);
+                    LinearLayout linearLayout = (LinearLayout) findViewById(R.id.conferences);
+                    TextView confNames = new TextView(conferences.this);
+                    confNames.setText(jsonObject.getString("confName"));
+                    confNames.setTextSize(15);
+                    linearLayout.addView(confNames);
+                }
+
+
+
+
 
 
             } catch (JSONException e) {
@@ -162,10 +170,8 @@ public class conferences extends Activity {
             super.onPostExecute(s);
             pdialog.dismiss();
            //tv = (TextView) findViewById(R.id.ConfToView);
-            if (s.equals(null)){
-                Toast.makeText(getApplicationContext(),"Conference not found",Toast.LENGTH_LONG).show();
-            }
-            tv.setText(s);
+
+
 
         }
     }

@@ -5,37 +5,23 @@
     android:orientation="vertical"
     android:background="#ff79cad6">
 
-    <RelativeLayout
+    <EditText
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/searchConf">
+        android:layout_height="wrap_content"
+        android:id="@+id/ConfToSearch"
+        android:hint="Search a conference"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="77dp" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Search"
-            android:id="@+id/testBtn"
-            android:layout_gravity="center_horizontal"
-            android:layout_below="@+id/ConfToSearch"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="63dp" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/ConfToSearch"
-            android:hint="Search a conference"
-            android:layout_gravity="center_horizontal"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="77dp" />
-
-        <SearchView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/searchView"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-
-    </RelativeLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:id="@+id/testBtn"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/ConfToSearch"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="63dp" />
 </LinearLayout>
