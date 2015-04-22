@@ -29,7 +29,7 @@ public class MainActivity2 extends Activity {
     NotificationManager manager;
     Intent resultIntent;
     private TaskStackBuilder stackBuilder;
-    private static String[] Options = {"My Profile","My Conferences","Search a conference","View my papers"};
+    private static String[] Options = {"My Profile","My Conferences","Search a conference and join"};
     Intent intent ;
     private String username;
     ListView OptionsToSelect;

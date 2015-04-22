@@ -148,10 +148,10 @@ public class conferences extends Activity {
                 for (int c=0;c<=jsonArray.length();c++){
                     JSONObject jsonObject = jsonArray.getJSONObject(c);
                     LinearLayout linearLayout = (LinearLayout) findViewById(R.id.conferences);
-                    TextView confNames = new TextView(conferences.this);
-                    confNames.setText(jsonObject.getString("confName"));
-                    confNames.setTextSize(15);
-                    linearLayout.addView(confNames);
+                    TextView confRes = new TextView(conferences.this);
+                    confRes.setText(jsonObject.getString("confName"));
+                    confRes.setTextSize(15);
+                    linearLayout.addView(confRes);
                 }
 
 
