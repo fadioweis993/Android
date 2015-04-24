@@ -10,9 +10,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,11 +38,11 @@ public class conferences extends Activity {
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
     private static final String TAG_TITLE = "title";
-    protected TextView confSearchResult;
     protected EditText ConfSearch;
-    ScrollView theLayout;
+    ListView theLayout;
+    String conferencesToJoin[];
     TextView textToView;
-
+    ArrayAdapter<String> adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +58,8 @@ public class conferences extends Activity {
 
             }
         });
+
+
     }
 
     @Override
@@ -154,14 +158,14 @@ public class conferences extends Activity {
 
                 JSONArray jsonArray = json.getJSONArray("conferencesResult");
 
-                 String outPut = "";
+                conferencesToJoin = new String[jsonArray.length()];
                 for (int c = 0; c <= jsonArray.length(); c++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(c);
-                    theLayout = (ScrollView) findViewById(R.id.scrollView);
+                    theLayout = (ListView) findViewById(R.id.listView);
                     Log.d("JSONArrayy",jsonObject.toString());
-                    outPut += jsonObject.getString("confName") + "\n";
+                    conferencesToJoin[c] = jsonObject.getString("confName"); //+ "\n";
                     textToView = new TextView(conferences.this);
-                    textToView.setText(outPut);
+                    textToView.setText(conferencesToJoin[c]);
                     textToView.setTextSize(15);
                     run();
 
@@ -189,8 +193,11 @@ public class conferences extends Activity {
         conferences.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                theLayout.removeAllViews();
-                theLayout.addView(textToView);
+
+                //theLayout.addView(textToView);
+                theLayout = (ListView) findViewById(R.id.listView);
+                adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.simple_list_item_1,conferencesToJoin);
+                theLayout.setAdapter(adapter);
             }
         });
     }

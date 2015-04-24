@@ -6,6 +6,12 @@
     android:background="#ff79cad6"
     android:weightSum="1">
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="128dp"
+        android:id="@+id/listView"
+        android:layout_weight="0.90" />
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,12 +30,5 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="63dp"
         android:layout_gravity="center_horizontal" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollView"
-        android:layout_gravity="center_horizontal"
-        android:fillViewport="true" />
 
 </LinearLayout>
