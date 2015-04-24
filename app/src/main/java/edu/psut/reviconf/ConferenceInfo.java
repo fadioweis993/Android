@@ -1,12 +1,13 @@
 package edu.psut.reviconf;
 
+import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class ConferenceInfo extends ActionBarActivity {
+public class ConferenceInfo extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

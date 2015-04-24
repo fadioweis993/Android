@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,6 +43,7 @@ public class conferences extends Activity {
     ListView theLayout;
     String conferencesToJoin[];
     TextView textToView;
+    JSONArray jsonArray;
     ArrayAdapter<String> adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,7 +158,7 @@ public class conferences extends Activity {
 
             try {
 
-                JSONArray jsonArray = json.getJSONArray("conferencesResult");
+                jsonArray = json.getJSONArray("conferencesResult");
 
                 conferencesToJoin = new String[jsonArray.length()];
                 for (int c = 0; c <= jsonArray.length(); c++) {
@@ -198,6 +200,16 @@ public class conferences extends Activity {
                 theLayout = (ListView) findViewById(R.id.listView);
                 adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.simple_list_item_1,conferencesToJoin);
                 theLayout.setAdapter(adapter);
+                theLayout.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        String userChoose = conferencesToJoin[position];
+                        Intent intent = new Intent(conferences.this,ConferenceInfo.class).putExtra("confName",userChoose);
+                        startActivity(intent);
+
+                    }
+                });
+
             }
         });
     }
