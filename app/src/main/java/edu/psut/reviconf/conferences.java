@@ -35,7 +35,7 @@ public class conferences extends Activity {
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
     private static final String TAG_TITLE = "title";
-    protected TextView tv;
+    protected TextView confSearchResult;
     protected EditText ConfSearch;
 
 
@@ -50,7 +50,13 @@ public class conferences extends Activity {
         bttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new getConf().execute();
+               // new searchConf().execute();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        new searchConf().execute();
+                    }
+                });
             }
         });
     }
@@ -115,7 +121,7 @@ public class conferences extends Activity {
         }
     }
 
-    public class getConf extends AsyncTask<String, String, String> {
+    public class searchConf extends AsyncTask<String, String, String> {
 
         ProgressDialog pdialog;
 
@@ -132,44 +138,43 @@ public class conferences extends Activity {
         @Override
         protected String doInBackground(String... params) {
 
+            ConfSearch = (EditText) findViewById(R.id.ConfToSearch);
+            //confSearchResult = (TextView) findViewById(R.id.confResult);
+            String conf = ConfSearch.getText().toString();
+            List<NameValuePair> confs = new ArrayList<NameValuePair>();
+            confs.add(new BasicNameValuePair("confName",conf + '%'));
+
+            JSONParser jsonParser = new JSONParser();
+            JSONObject json = jsonParser.makeHttpRequest(LOGIN_URL, "POST", confs);
+
+
+
             try {
-                ConfSearch = (EditText) findViewById(R.id.ConfToSearch);
-
-                String conf = ConfSearch.getText().toString();
-                List<NameValuePair> confs = new ArrayList<NameValuePair>();
-                confs.add(new BasicNameValuePair("confName",conf + '%'));
-
-                JSONParser jsonParser = new JSONParser();
-                JSONObject json = jsonParser.makeHttpRequest(LOGIN_URL, "POST", confs);
-
-
-
                 JSONArray jsonArray = json.getJSONArray("conferencesResult");
-                for (int c=0;c<=jsonArray.length();c++){
+                for (int c = 0; c <= jsonArray.length(); c++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(c);
                     LinearLayout linearLayout = (LinearLayout) findViewById(R.id.conferences);
-                    TextView confRes = new TextView(conferences.this);
-                    confRes.setText(jsonObject.getString("confName"));
-                    confRes.setTextSize(15);
-                    linearLayout.addView(confRes);
+                    TextView confNames = new TextView(conferences.this);
+                    String confSearchResult = jsonObject.getString("confName");
+                    confNames.setText(confSearchResult);
+                    confNames.setTextSize(15);
+
+                    linearLayout.addView(confNames);
+
                 }
 
-
-
-
-
-
-            } catch (JSONException e) {
-                e.printStackTrace();
+            }catch (JSONException ee){
+                ee.printStackTrace();
             }
+
             return null;
         }
+
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             pdialog.dismiss();
-           //tv = (TextView) findViewById(R.id.ConfToView);
 
 
 

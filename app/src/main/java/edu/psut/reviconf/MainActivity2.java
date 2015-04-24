@@ -66,10 +66,7 @@ public class MainActivity2 extends Activity {
                         Intent intent2 = new Intent(MainActivity2.this,conferences.class);
                         startActivity(intent2);
                         break;
-                    case 3:
-                        break;
 
-                    //my papers
 
                 }
             }
