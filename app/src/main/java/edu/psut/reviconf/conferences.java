@@ -12,8 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +26,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * Created by Oweis on 15/3/2015.
  */
@@ -37,7 +38,8 @@ public class conferences extends Activity {
     private static final String TAG_TITLE = "title";
     protected TextView confSearchResult;
     protected EditText ConfSearch;
-
+    ScrollView theLayout;
+    TextView textToView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +52,8 @@ public class conferences extends Activity {
         bttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // new searchConf().execute();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        new searchConf().execute();
-                    }
-                });
+                new searchConf().execute();
+
             }
         });
     }
@@ -141,35 +138,41 @@ public class conferences extends Activity {
             ConfSearch = (EditText) findViewById(R.id.ConfToSearch);
             //confSearchResult = (TextView) findViewById(R.id.confResult);
             String conf = ConfSearch.getText().toString();
+            if (conf.equals("")){
+                //Toast.makeText(conferences.this,"You can't leave empty",Toast.LENGTH_LONG).show();
+                Log.d("empty","empty string");
+            }else {
+
+
             List<NameValuePair> confs = new ArrayList<NameValuePair>();
-            confs.add(new BasicNameValuePair("confName",conf + '%'));
+            confs.add(new BasicNameValuePair("confName",conf));
 
             JSONParser jsonParser = new JSONParser();
             JSONObject json = jsonParser.makeHttpRequest(LOGIN_URL, "POST", confs);
 
-
-
             try {
+
                 JSONArray jsonArray = json.getJSONArray("conferencesResult");
+
+                 String outPut = "";
                 for (int c = 0; c <= jsonArray.length(); c++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(c);
-                    LinearLayout linearLayout = (LinearLayout) findViewById(R.id.conferences);
-                    TextView confNames = new TextView(conferences.this);
-                    String confSearchResult = jsonObject.getString("confName");
-                    confNames.setText(confSearchResult);
-                    confNames.setTextSize(15);
-
-                    linearLayout.addView(confNames);
+                    theLayout = (ScrollView) findViewById(R.id.scrollView);
+                    Log.d("JSONArrayy",jsonObject.toString());
+                    outPut += jsonObject.getString("confName") + "\n";
+                    textToView = new TextView(conferences.this);
+                    textToView.setText(outPut);
+                    textToView.setTextSize(15);
+                    run();
 
                 }
-
             }catch (JSONException ee){
                 ee.printStackTrace();
             }
 
-            return null;
-        }
 
+        } return null;
+        }
 
         @Override
         protected void onPostExecute(String s) {
@@ -178,6 +181,18 @@ public class conferences extends Activity {
 
 
 
+
         }
     }
+
+    public void run() {
+        conferences.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                theLayout.removeAllViews();
+                theLayout.addView(textToView);
+            }
+        });
+    }
 }
+

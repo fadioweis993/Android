@@ -6,13 +6,6 @@
     android:background="#ff79cad6"
     android:weightSum="1">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/ConferenceResult"
-        android:layout_weight="0.93"></LinearLayout>
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,9 +20,16 @@
         android:layout_height="wrap_content"
         android:text="Search"
         android:id="@+id/testBtn"
-        android:layout_gravity="center_horizontal"
         android:layout_below="@+id/ConfToSearch"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="63dp" />
+        android:layout_marginTop="63dp"
+        android:layout_gravity="center_horizontal" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView"
+        android:layout_gravity="center_horizontal"
+        android:fillViewport="true" />
 
 </LinearLayout>

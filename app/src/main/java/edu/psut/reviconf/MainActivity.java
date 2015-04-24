@@ -124,7 +124,7 @@ public class MainActivity extends Activity {
 
             pdialog.dismiss();
             if (s != null){
-                Toast.makeText(MainActivity.this, s, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
             }
         }
     }
