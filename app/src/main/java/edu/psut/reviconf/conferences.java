@@ -42,6 +42,7 @@ public class conferences extends Activity {
     protected EditText ConfSearch;
     ListView theLayout;
     String conferencesToJoin[];
+   private int conferenceID[];
     TextView textToView;
     JSONArray jsonArray;
     ArrayAdapter<String> adapter;
@@ -161,11 +162,14 @@ public class conferences extends Activity {
                 jsonArray = json.getJSONArray("conferencesResult");
 
                 conferencesToJoin = new String[jsonArray.length()];
+                conferenceID = new int[jsonArray.length()];
+                Log.d("ArraySize",String.valueOf(jsonArray.length()));
                 for (int c = 0; c <= jsonArray.length(); c++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(c);
                     theLayout = (ListView) findViewById(R.id.listView);
-                    Log.d("JSONArrayy",jsonObject.toString());
                     conferencesToJoin[c] = jsonObject.getString("confName"); //+ "\n";
+                    conferenceID[c] = jsonObject.getInt("confID");
+                    Log.d("confID",String.valueOf(conferenceID[c]));
                     textToView = new TextView(conferences.this);
                     textToView.setText(conferencesToJoin[c]);
                     textToView.setTextSize(15);
@@ -196,15 +200,14 @@ public class conferences extends Activity {
             @Override
             public void run() {
 
-                //theLayout.addView(textToView);
                 theLayout = (ListView) findViewById(R.id.listView);
                 adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.simple_list_item_1,conferencesToJoin);
                 theLayout.setAdapter(adapter);
                 theLayout.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        String userChoose = conferencesToJoin[position];
-                        Intent intent = new Intent(conferences.this,ConferenceInfo.class).putExtra("confName",userChoose);
+                        String userChoose = String.valueOf(conferenceID[position]);
+                        Intent intent = new Intent(conferences.this,ConferenceInfo.class).putExtra("confID",userChoose);
                         startActivity(intent);
 
                     }

@@ -49,7 +49,7 @@ public class MyProfile extends Activity {
         setContentView(R.layout.activity_my_profile);
 
         new getPersonInfo().execute();
-        //      getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         profilePic = (ImageView) findViewById(R.id.ivImage);
         bitmap = getBitmapFromURL(imgUrl);
         profilePic.setImageBitmap(bitmap);

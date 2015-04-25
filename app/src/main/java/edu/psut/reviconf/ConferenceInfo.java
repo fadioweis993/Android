@@ -1,18 +1,41 @@
 package edu.psut.reviconf;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ConferenceInfo extends Activity {
-
+    Intent i;
+    String confID;
+    private TextView confName;
+    private TextView confDate;
+    private TextView confSubmitEnd;
+    private TextView confReviewEnd;
+    private TextView introduction;
+    private TextView confCreator;
+    private static final String CONFERENCE_INFO = "http://192.168.1.2/webservice/conferenceInfo.php";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conference_info);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        new getConfInfo().execute();
+
     }
 
 
@@ -29,7 +52,9 @@ public class ConferenceInfo extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
@@ -37,4 +62,68 @@ public class ConferenceInfo extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private class getConfInfo extends AsyncTask <String, String, String>{
+
+
+        ProgressDialog pdialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pdialog = new ProgressDialog(ConferenceInfo.this);
+            pdialog.setMessage("Processing your request .... ");
+            pdialog.setIndeterminate(false);
+            pdialog.setCancelable(true);
+            pdialog.show();
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            confName = (TextView) findViewById(R.id.confName);
+            confDate = (TextView) findViewById(R.id.confDate);
+            confSubmitEnd = (TextView) findViewById(R.id.confSubmitEnd);
+            confReviewEnd = (TextView) findViewById(R.id.confReviewEnd);
+            introduction = (TextView) findViewById(R.id.introduction);
+            confCreator = (TextView) findViewById(R.id.confCreator);
+            i = getIntent ();
+            confID = i.getStringExtra("confID");
+            List<NameValuePair> confInfo = new ArrayList<NameValuePair>();
+            confInfo.add(new BasicNameValuePair("confID",confID));
+
+            JSONParser jsonParser = new JSONParser();
+            JSONObject json = jsonParser.makeHttpRequest(CONFERENCE_INFO, "POST", confInfo);
+
+            try {
+                String Name = json.getString("confName");
+                String Date = json.getString("confDate");
+                String SubmitEnd = json.getString("confSubmitEnd");
+                String ReviewEnd = json.getString("confReviewEnd");
+                String Introduction =  json.getString("introduction");
+                String Creator = json.getString("confCreator");
+
+                confName.setText(Name);
+                confDate.setText(Date);
+                confSubmitEnd.setText(SubmitEnd);
+                confReviewEnd.setText(ReviewEnd);
+                introduction.setText(Introduction);
+                confCreator.setText(Creator);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            pdialog.dismiss();
+        }
+    }
+
+
 }
