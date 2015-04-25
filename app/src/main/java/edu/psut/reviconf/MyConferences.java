@@ -32,7 +32,7 @@ public class MyConferences extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_conferences);
-
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         new getConferences().execute();
     }
 
@@ -50,7 +50,9 @@ public class MyConferences extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
