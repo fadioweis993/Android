@@ -3,6 +3,7 @@ package edu.psut.reviconf;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
@@ -30,13 +32,15 @@ public class MainActivity extends Activity {
     private static final String TAG_MESSAGE = "message";
     private EditText tv;
     private EditText tv2;
-
+    TextView wrongID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tv = (EditText) findViewById(R.id.editText);
         tv2 = (EditText) findViewById(R.id.editText2);
+        wrongID = (TextView) findViewById(R.id.wrongID);
+        wrongID.setVisibility(View.INVISIBLE);
         Button btn = (Button) findViewById(R.id.button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,8 +109,11 @@ public class MainActivity extends Activity {
                     i.putExtra("UserID",userID);
                     startActivity(i);
                     return json.getString(TAG_MESSAGE);
-                }else{
+                }else if (success == 0){
                     Log.d("Login Failure!", json.getString(TAG_MESSAGE));
+                    wrongID.setText("Incorrect E-mail or Password");
+                    wrongID.setTextColor(Color.RED);
+                    wrongID.setVisibility(View.VISIBLE);
                     return json.getString(TAG_MESSAGE);
 
                 }
@@ -121,9 +128,10 @@ public class MainActivity extends Activity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
             pdialog.dismiss();
+
             if (s != null){
+
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
             }
         }

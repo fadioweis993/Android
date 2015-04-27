@@ -45,14 +45,17 @@ public class conferences extends Activity {
    private int conferenceID[];
     TextView textToView;
     JSONArray jsonArray;
+    private String UserIDD;
+    Intent i;
     ArrayAdapter<String> adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conferences);
-
         getActionBar().setDisplayHomeAsUpEnabled(true);
         Button bttn;
+        i = getIntent();
+        UserIDD = i.getStringExtra("UserID");
         bttn = (Button) findViewById(R.id.testBtn);
         bttn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,8 +209,10 @@ public class conferences extends Activity {
                 theLayout.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                         String userChoose = String.valueOf(conferenceID[position]);
                         Intent intent = new Intent(conferences.this,ConferenceInfo.class).putExtra("confID",userChoose);
+                        intent.putExtra("UserID",UserIDD);
                         startActivity(intent);
 
                     }

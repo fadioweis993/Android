@@ -5,9 +5,13 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -19,8 +23,10 @@ import java.util.List;
 
 
 public class ConferenceInfo extends Activity {
+    Intent ii;
     Intent i;
     String confID;
+    String UserID;
     private TextView confName;
     private TextView confDate;
     private TextView confSubmitEnd;
@@ -28,12 +34,24 @@ public class ConferenceInfo extends Activity {
     private TextView introduction;
     private TextView confCreator;
     private static final String CONFERENCE_INFO = "http://192.168.1.2/webservice/conferenceInfo.php";
+    private static final String JOIN_CONFERENCE = "http://192.168.1.2/webservice/joinConf.php";
+    private static final String TAG_SUCCESS = "success";
+    private static final String TAG_MESSAGE = "message";
+    private Button joinBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conference_info);
-
         getActionBar().setDisplayHomeAsUpEnabled(true);
+        ii = getIntent();
+        UserID = ii.getStringExtra("UserID");
+        joinBtn = (Button) findViewById(R.id.joinConf);
+        joinBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new joinConf().execute();
+            }
+        });
         new getConfInfo().execute();
 
     }
@@ -125,5 +143,66 @@ public class ConferenceInfo extends Activity {
         }
     }
 
+    private class joinConf extends AsyncTask <String, String, String>{
+        ProgressDialog pdialog;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pdialog = new ProgressDialog(ConferenceInfo.this);
+            pdialog.setMessage("Joining your Conference .... ");
+            pdialog.setIndeterminate(false);
+            pdialog.setCancelable(true);
+            pdialog.show();
+        }
+        @Override
+        protected String doInBackground(String... params) {
 
+            List<NameValuePair> joinConf = new ArrayList<NameValuePair>();
+            joinConf.add(new BasicNameValuePair("confID",confID));
+            joinConf.add(new BasicNameValuePair("UserID",UserID));
+            JSONParser jsonParser = new JSONParser();
+            JSONObject json = jsonParser.makeHttpRequest(JOIN_CONFERENCE, "POST", joinConf);
+
+            int success = 0;
+            try {
+                success = json.getInt(TAG_SUCCESS);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            if (success == 1) {
+                Log.d("Joined Successful!", json.toString());
+                try {
+                   return json.getString(TAG_MESSAGE);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    return json.getString(TAG_MESSAGE);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }else{
+                try {
+                    Log.d("Login Failure!", json.getString(TAG_MESSAGE));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    return json.getString(TAG_MESSAGE);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            pdialog.dismiss();
+            Toast.makeText(getApplicationContext(),s ,Toast.LENGTH_LONG).show();
+        }
+    }
 }

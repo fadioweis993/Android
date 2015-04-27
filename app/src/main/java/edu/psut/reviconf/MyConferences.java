@@ -9,7 +9,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,7 +31,9 @@ public class MyConferences extends Activity {
 
     private static final String MyConferences_URL = "http://192.168.1.2/webservice/MyConferences.php";
     private TextView ConferenceInfo;
-
+    TextView confNames;
+    LinearLayout linearLayout;
+    String getConfName[];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,16 +92,14 @@ public class MyConferences extends Activity {
 
             JSONParser jsonParser = new JSONParser();
             JSONObject json = jsonParser.makeHttpRequest(MyConferences_URL, "POST", MyConferences);
-
+            linearLayout = (LinearLayout) findViewById(R.id.calendar);
             try {
                 JSONArray jsonArray = json.getJSONArray("confName");
+                linearLayout.removeAllViews();
+                getConfName = new String[jsonArray.length()];
                 for (int c=0;c<=jsonArray.length();c++){
                     JSONObject jsonObject = jsonArray.getJSONObject(c);
-                    LinearLayout linearLayout = (LinearLayout) findViewById(R.id.calendar);
-                    TextView confNames = new TextView(MyConferences.this);
-                    confNames.setText(jsonObject.getString("confName"));
-                    confNames.setTextSize(15);
-                    linearLayout.addView(confNames);
+                    getConfName[c] = jsonObject.getString("confName");
                 }
 
             } catch (JSONException e) {
@@ -103,7 +107,7 @@ public class MyConferences extends Activity {
             }
 
 
-
+            run();
 
 
             return null;
@@ -116,5 +120,26 @@ public class MyConferences extends Activity {
 
         }
     }
+
+    public void run() {
+        MyConferences.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                for (int i=0;i<getConfName.length;i++){
+                  int num = i;
+                    confNames = new TextView(MyConferences.this);
+                    confNames.setText(++num + "- " + getConfName[i]);
+                    linearLayout.addView(confNames);
+                    confNames.setTextSize(20);
+                }
+
+            }
+        });
+    }
+
+
+
+
 }
 

@@ -59,11 +59,10 @@ public class MainActivity2 extends Activity {
                         break;
                     case 1://my conferences
                         Intent intent1 = new Intent(MainActivity2.this,MyConferences.class).putExtra("UserID",UserID);
-
                         startActivity(intent1);
                         break;
                     case 2://search and join
-                        Intent intent2 = new Intent(MainActivity2.this,conferences.class);
+                        Intent intent2 = new Intent(MainActivity2.this,conferences.class).putExtra("UserID",UserID);
                         startActivity(intent2);
                         break;
 
@@ -86,53 +85,12 @@ public class MainActivity2 extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        switch (id) {
-//            case R.id.action_call:
-//                Intent dialer = new Intent(Intent.ACTION_CALL);
-//                startActivity(dialer);
-//                return true;
-//            case R.id.action_speech:
-//                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-//                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-//                        RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-//                startActivityForResult(intent, 1234);
-//
-//                return true;
-//            case R.id.action_done:
-//
-//                Bundle args = new Bundle();
-//                args.putString("Menu", "You pressed done button.");
-//
-
-//                FragmentManager fragmentManager = getFragmentManager();
-
-//
-//                return true;
-            case R.id.action_contacts:
-                Toast.makeText(getApplicationContext(), "Contacts Clicked", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.action_settings:
-                Toast.makeText(getApplicationContext(), "Settings Clicked", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.action_status:
-                Toast.makeText(getApplicationContext(), "Status Clicked", Toast.LENGTH_SHORT).show();
-                return true;
-            default:
                 return super.onOptionsItemSelected(item);
-        }
+
 
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        //EditText et = (EditText) findViewById(R.id.editText3);
-//        if (requestCode == 1234 && resultCode == RESULT_OK) {
-//            String voice_text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).get(0);
-//            Toast.makeText(getApplicationContext(), voice_text, Toast.LENGTH_LONG).show();
-//         //   et.setText(voice_text);
-//
-//        }
-//    }
+
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     protected void startNotification() {
