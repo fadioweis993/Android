@@ -29,7 +29,7 @@ import java.util.List;
 
 public class MyConferences extends Activity {
 
-    private static final String MyConferences_URL = "http://192.168.1.2/webservice/MyConferences.php";
+    private static final String MyConferences_URL = "http://newfaceapps.site90.com/myconferences.php";
     private TextView ConferenceInfo;
     TextView confNames;
     LinearLayout linearLayout;
@@ -95,7 +95,6 @@ public class MyConferences extends Activity {
             linearLayout = (LinearLayout) findViewById(R.id.calendar);
             try {
                 JSONArray jsonArray = json.getJSONArray("confName");
-                linearLayout.removeAllViews();
                 getConfName = new String[jsonArray.length()];
                 for (int c=0;c<=jsonArray.length();c++){
                     JSONObject jsonObject = jsonArray.getJSONObject(c);

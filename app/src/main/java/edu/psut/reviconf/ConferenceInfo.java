@@ -33,8 +33,8 @@ public class ConferenceInfo extends Activity {
     private TextView confReviewEnd;
     private TextView introduction;
     private TextView confCreator;
-    private static final String CONFERENCE_INFO = "http://192.168.1.2/webservice/conferenceInfo.php";
-    private static final String JOIN_CONFERENCE = "http://192.168.1.2/webservice/joinConf.php";
+    private static final String CONFERENCE_INFO = "http://newfaceapps.site90.com/conferenceInfo.php";
+    private static final String JOIN_CONFERENCE = "http://newfaceapps.site90.com/joinConf.php";
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
     private Button joinBtn;
@@ -112,19 +112,25 @@ public class ConferenceInfo extends Activity {
             JSONObject json = jsonParser.makeHttpRequest(CONFERENCE_INFO, "POST", confInfo);
 
             try {
-                String Name = json.getString("confName");
-                String Date = json.getString("confDate");
-                String SubmitEnd = json.getString("confSubmitEnd");
-                String ReviewEnd = json.getString("confReviewEnd");
-                String Introduction =  json.getString("introduction");
-                String Creator = json.getString("confCreator");
+              final  String Name = json.getString("confName");
+                final  String Date = json.getString("confDate");
+                final String SubmitEnd = json.getString("confSubmitEnd");
+                final String ReviewEnd = json.getString("confReviewEnd");
+                final String Introduction =  json.getString("introduction");
+                final String Creator = json.getString("confCreator");
 
-                confName.setText(Name);
-                confDate.setText(Date);
-                confSubmitEnd.setText(SubmitEnd);
-                confReviewEnd.setText(ReviewEnd);
-                introduction.setText(Introduction);
-                confCreator.setText(Creator);
+                ConferenceInfo.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        confName.setText(Name);
+                        confDate.setText(Date);
+                        confSubmitEnd.setText(SubmitEnd);
+                        confReviewEnd.setText(ReviewEnd);
+                        introduction.setText(Introduction);
+                        confCreator.setText(Creator);
+                    }
+                });
+
 
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -35,7 +35,7 @@ import java.util.List;
  */
 public class conferences extends Activity {
     private MenuItem item;
-    private static final String LOGIN_URL = "http://192.168.1.2/webservice/conferences.php";
+    private static final String LOGIN_URL = "http://newfaceapps.site90.com/conferences.php";
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
     private static final String TAG_TITLE = "title";

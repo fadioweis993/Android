@@ -27,7 +27,7 @@ import java.util.List;
 public class MainActivity extends Activity {
 
     JSONParser jsonParser = new JSONParser();
-    private static final String LOGIN_URL = "http://192.168.1.2/webservice/login.php";
+    private static final String LOGIN_URL = "http://newfaceapps.site90.com/login.php";
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
     private EditText tv;

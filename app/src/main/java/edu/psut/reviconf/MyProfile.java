@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Looper;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,8 +32,8 @@ import java.util.List;
 public class MyProfile extends Activity {
     private ImageView profilePic;
     private Bitmap bitmap;
-    private String imgUrl = "http://icons.iconarchive.com/icons/crountch/one-piece-jolly-roger/72/Luffys-flag-2-icon.png";
-    private static final String LOGIN_URL = "http://192.168.1.2/webservice/personalData.php";
+    private String imgUrl = "https://scontent-fra.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/1385863_10205100205797356_2423613737676426155_n.jpg?oh=166a670103eb9ce756b155de6cded5d0&oe=559E3933";
+    private static final String LOGIN_URL = "http://newfaceapps.site90.com/personalData.php";
     private static final String TAG_MESSAGE = "message";
     private TextView fname;
     private TextView E_mail;
@@ -47,15 +48,16 @@ public class MyProfile extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile);
-
-        new getPersonInfo().execute();
         getActionBar().setDisplayHomeAsUpEnabled(true);
+        new getPersonInfo().execute();
+
         profilePic = (ImageView) findViewById(R.id.ivImage);
         bitmap = getBitmapFromURL(imgUrl);
         profilePic.setImageBitmap(bitmap);
 
 
     }
+
 
 
     @Override
@@ -136,22 +138,31 @@ public class MyProfile extends Activity {
 
                 Log.d("JSON_I_GOT",json.toString());
 
-                String Title = json.getString("Title");
-                String Age = json.getString("Age");
-                String Address = json.getString("Address");
-                String Email = json.getString("E-mail");
-                String Educational_Degree = json.getString("Educational_Degree");
-                String date_registered = json.getString("date_registered");
-                String f_name = json.getString("f_name");
-                String l_name = json.getString("l_name");
+                final String Title = json.getString("Title");
+                final String Age = json.getString("Age");
+                final String Address = json.getString("Address");
+                final String Email = json.getString("E-mail");
+                final String Educational_Degree = json.getString("Educational_Degree");
+                final  String date_registered = json.getString("date_registered");
+                final  String f_name = json.getString("f_name");
+                final  String l_name = json.getString("l_name");
 
-                fname.setText(f_name + " " + l_name);
-                E_mail.setText(Email);
-                person_title.setText(Title);
-                address.setText(Address);
-                Date_registered.setText(date_registered);
-                educational_degree.setText(Educational_Degree);
-                age.setText(Age);
+                MyProfile.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        fname.setText(f_name + " " + l_name);
+                        E_mail.setText(Email);
+                        person_title.setText(Title);
+                        address.setText(Address);
+                        Date_registered.setText(date_registered);
+                        educational_degree.setText(Educational_Degree);
+                        age.setText(Age);
+                    }
+                });
+
+
+
+
 
                 return true;
 
