@@ -61,7 +61,7 @@
             android:backgroundTintMode="src_over"
             android:enabled="true"
             android:outlineProvider="background"
-            android:theme="@style/Base.TextAppearance.AppCompat.Button" />
+             />
 
         <ImageView
             android:layout_width="match_parent"
@@ -82,7 +82,7 @@
             android:id="@+id/wrongID"
             android:layout_below="@+id/editText2"
             android:layout_centerHorizontal="true"
-            android:textSize="@dimen/abc_text_size_small_material" />
+             />
 
     </RelativeLayout>
 

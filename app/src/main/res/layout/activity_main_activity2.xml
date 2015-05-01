@@ -7,8 +7,24 @@
     tools:context="edu.psut.reviconf.MainActivity2"
     android:textColor="#ff000000"
     style="@style/AppTheme"
-    android:id="@+id/activity_two"
-    android:background="@drawable/bg_blurred">
+    android:id="@+id/activity_two">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/img"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </LinearLayout>
 
     <ListView
         android:layout_width="fill_parent"
@@ -16,8 +32,8 @@
         android:id="@+id/MainOptions"
         android:cacheColorHint="#ff000000"
         android:textColor="#ff000000"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="151dp" />
 
 </RelativeLayout>
