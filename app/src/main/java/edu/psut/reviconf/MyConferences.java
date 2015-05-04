@@ -30,10 +30,12 @@ import java.util.List;
 public class MyConferences extends Activity {
 
     private static final String MyConferences_URL = "http://newfaceapps.site90.com/myconferences.php";
-    private TextView ConferenceInfo;
-    TextView confNames;
     LinearLayout linearLayout;
     String getConfName[];
+    String confID[];
+    ArrayAdapter<String> adapter;
+    ListView theLayout2;
+    String UserID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +87,7 @@ public class MyConferences extends Activity {
 
             Intent i = getIntent();
 
-            String UserID = i.getStringExtra("UserID");
+            UserID = i.getStringExtra("UserID");
 
             List<NameValuePair> MyConferences = new ArrayList<NameValuePair>();
             MyConferences.add(new BasicNameValuePair("UserID", UserID));
@@ -96,9 +98,11 @@ public class MyConferences extends Activity {
             try {
                 JSONArray jsonArray = json.getJSONArray("confName");
                 getConfName = new String[jsonArray.length()];
+                confID = new String[jsonArray.length()];
                 for (int c=0;c<=jsonArray.length();c++){
                     JSONObject jsonObject = jsonArray.getJSONObject(c);
                     getConfName[c] = jsonObject.getString("confName");
+                    confID[c] = jsonObject.getString("confID");
                 }
 
             } catch (JSONException e) {
@@ -124,14 +128,19 @@ public class MyConferences extends Activity {
         MyConferences.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                theLayout2 = (ListView) findViewById(R.id.listView2);
+                adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.simple_list_item_1,getConfName);
+                theLayout2.setAdapter(adapter);
+              theLayout2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                  @Override
+                  public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                      String userChoose = String.valueOf(confID[position]);
+                      Intent intent = new Intent(MyConferences.this,ConferenceInfo.class).putExtra("confID",userChoose);
+                      intent.putExtra("UserID",UserID);
+                      startActivity(intent);
 
-                for (int i=0;i<getConfName.length;i++){
-                  int num = i;
-                    confNames = new TextView(MyConferences.this);
-                    confNames.setText(++num + "- " + getConfName[i]);
-                    linearLayout.addView(confNames);
-                    confNames.setTextSize(20);
-                }
+                  }
+              });
 
             }
         });

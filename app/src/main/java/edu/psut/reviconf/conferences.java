@@ -61,7 +61,6 @@ public class conferences extends Activity {
             @Override
             public void onClick(View v) {
                 new searchConf().execute();
-
             }
         });
 
@@ -202,7 +201,6 @@ public class conferences extends Activity {
         conferences.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
                 theLayout = (ListView) findViewById(R.id.listView);
                 adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.simple_list_item_1,conferencesToJoin);
                 theLayout.setAdapter(adapter);
