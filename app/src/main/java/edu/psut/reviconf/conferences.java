@@ -169,9 +169,8 @@ public class conferences extends Activity {
                 for (int c = 0; c <= jsonArray.length(); c++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(c);
                     theLayout = (ListView) findViewById(R.id.listView);
-                    conferencesToJoin[c] = jsonObject.getString("confName"); //+ "\n";
+                    conferencesToJoin[c] = jsonObject.getString("confName");
                     conferenceID[c] = jsonObject.getInt("confID");
-                    Log.d("confID",String.valueOf(conferenceID[c]));
                     textToView = new TextView(conferences.this);
                     textToView.setText(conferencesToJoin[c]);
                     textToView.setTextSize(15);

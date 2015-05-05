@@ -1,87 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/LinearLayout1"
+    android:id="@+id/Profile"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:padding="4dp"
     android:orientation="vertical"
     android:weightSum="1"
     android:background="#ff79cad6">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="519dp"
-            android:orientation="vertical"
-            android:layout_weight="1"
-            android:weightSum="1">
-
-            <ImageView
-                android:id="@+id/ivImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:src="@drawable/ic_launcher" />
-
-            <TextView
-                android:id="@+id/E_mail"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:textColor="#D64530"
-                android:text="E-mail" />
-
-            <TextView
-                android:id="@+id/fname"
-                android:layout_width="match_parent"
-                android:layout_height="57dp"
-                android:text="name"
-                android:textColor="#166CED"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <TextView
-                android:id="@+id/age"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#009A57"
-                android:text="Age"
-                android:layout_weight="0.39" />
-
-            <TextView
-                android:id="@+id/person_title"
-                android:layout_width="match_parent"
-                android:layout_height="69dp"
-                android:textColor="#ffd67b3c"
-                android:text="person title" />
-
-
-            <TextView
-                android:id="@+id/Address"
-                android:layout_width="match_parent"
-                android:layout_height="64dp"
-                android:text="address"
-                android:textColor="#ffd6cc86"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <TextView
-                android:id="@+id/date_registered"
-                android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:textColor="#D64530"
-                android:text="Date Registered" />
-            <TextView
-                android:id="@+id/Educational_Degree"
-                android:layout_width="399dp"
-                android:layout_height="88dp"
-                android:textColor="#D64530"
-                android:text="Educational Degree" />
-
-        </LinearLayout>
-
-    </LinearLayout>
 
 
 </LinearLayout>

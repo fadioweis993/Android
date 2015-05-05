@@ -11,9 +11,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.google.android.gms.plus.model.people.Person;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.InputStream;
@@ -36,6 +41,11 @@ public class MyProfile extends Activity {
     private TextView Date_registered;
     private TextView educational_degree;
     private TextView age;
+    TextView textToView;
+    String PersonalData[];
+    LinearLayout personalData;
+    int size;
+    int count = 0;
      Intent i;
     private String username ;
     @Override
@@ -44,11 +54,6 @@ public class MyProfile extends Activity {
         setContentView(R.layout.activity_my_profile);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         new getPersonInfo().execute();
-
-        profilePic = (ImageView) findViewById(R.id.ivImage);
-        bitmap = getBitmapFromURL(imgUrl);
-        profilePic.setImageBitmap(bitmap);
-
 
     }
 
@@ -79,23 +84,6 @@ public class MyProfile extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public Bitmap getBitmapFromURL(String src) {
-        try {
-            URL url = new URL(src);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            return myBitmap;
-
-        } catch (Exception e) {
-            // TODO: handle exception
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     public class getPersonInfo extends AsyncTask<String, String, Boolean> {
 
         ProgressDialog pdialog;
@@ -115,13 +103,13 @@ public class MyProfile extends Activity {
 
             try {
 
-                fname = (TextView) findViewById(R.id.fname);
+                /*fname = (TextView) findViewById(R.id.fname);
                 E_mail = (TextView) findViewById(R.id.E_mail);
                 person_title = (TextView) findViewById(R.id.person_title);
                 address = (TextView) findViewById(R.id.Address);
                 Date_registered = (TextView) findViewById(R.id.date_registered);
                 educational_degree = (TextView) findViewById(R.id.Educational_Degree);
-                age = (TextView) findViewById(R.id.age);
+                age = (TextView) findViewById(R.id.age);*/
                 i = getIntent();
                 username = i.getStringExtra("username");
                 List<NameValuePair> personalInfo = new ArrayList<NameValuePair>();
@@ -129,10 +117,27 @@ public class MyProfile extends Activity {
 
                 JSONParser jsonParser = new JSONParser();
                 JSONObject json = jsonParser.makeHttpRequest(LOGIN_URL, "POST", personalInfo);
+                JSONArray jsonArray = json.getJSONArray("personalData");
+                size = jsonArray.length();
+                PersonalData = new String[size];
+                for (int c=0;c<=jsonArray.length();c++){
+                    JSONObject jsonObject = jsonArray.getJSONObject(c);
+
+                    textToView = new TextView(MyProfile.this);
+                    textToView.setText("Name: " + jsonObject.getString("FirstName") + jsonObject.getString("LastName")+ "\n"
+                            + "\n" + "E-mail: " + jsonObject.getString("Email") + "\n"
+                            + "\n" + "Scientific Degree" + jsonObject.getString("scientific_degrees")+ "\n"
+                            + "\n" + "Date of registration: " + jsonObject.getString("date_registered")+ "\n"
+                            + "\n" + "City: " + jsonObject.getString("city")+ "\n"
+                            + "\n" + "Age: " + jsonObject.getString("Age")
+                    );
+                    textToView.setTextSize(20);
+                    run();
+                }
 
                 Log.d("JSON_I_GOT",json.toString());
 
-                final String Title = json.getString("Title");
+                /*final String Title = json.getString("Title");
                 final String Age = json.getString("Age");
                 final String Address = json.getString("Address");
                 final String Email = json.getString("E-mail");
@@ -140,8 +145,8 @@ public class MyProfile extends Activity {
                 final  String date_registered = json.getString("date_registered");
                 final  String f_name = json.getString("f_name");
                 final  String l_name = json.getString("l_name");
-
-                MyProfile.this.runOnUiThread(new Runnable() {
+*/
+               /* MyProfile.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         fname.setText(f_name + " " + l_name);
@@ -153,7 +158,7 @@ public class MyProfile extends Activity {
                         age.setText(Age);
                     }
                 });
-
+*/
 
 
 
@@ -176,6 +181,14 @@ public class MyProfile extends Activity {
 
         }
     }
+    public void run() {
+        MyProfile.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                personalData = (LinearLayout) findViewById(R.id.Profile);
+                personalData.addView(textToView);
+            }
 
+        });
+    }
 }
-
