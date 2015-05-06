@@ -124,9 +124,9 @@ public class MyProfile extends Activity {
                     JSONObject jsonObject = jsonArray.getJSONObject(c);
 
                     textToView = new TextView(MyProfile.this);
-                    textToView.setText("Name: " + jsonObject.getString("FirstName") + jsonObject.getString("LastName")+ "\n"
+                    textToView.setText("Name: " + jsonObject.getString("FirstName") +" "+ jsonObject.getString("LastName")+ "\n"
                             + "\n" + "E-mail: " + jsonObject.getString("Email") + "\n"
-                            + "\n" + "Scientific Degree" + jsonObject.getString("scientific_degrees")+ "\n"
+                            + "\n" + "Scientific Degree: " + jsonObject.getString("scientific_degrees")+ "\n"
                             + "\n" + "Date of registration: " + jsonObject.getString("date_registered")+ "\n"
                             + "\n" + "City: " + jsonObject.getString("city")+ "\n"
                             + "\n" + "Age: " + jsonObject.getString("Age")

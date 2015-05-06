@@ -33,6 +33,7 @@ public class MainActivity extends Activity {
     private EditText tv;
     private EditText tv2;
     TextView wrongID;
+    int success = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +93,7 @@ public class MainActivity extends Activity {
 
         @Override
         protected String doInBackground(String... args) {
-            int success;
+
             String username = tv.getText().toString();
             String password = tv2.getText().toString();
 
@@ -103,13 +104,11 @@ public class MainActivity extends Activity {
 
 
                 JSONObject json = jsonParser.makeHttpRequest(LOGIN_URL,"POST",params);
-
-                String FirstName = json.getString("FirstName");
-                String userID = json.getString("UserID");
-
-                // json success tag
                 success = json.getInt(TAG_SUCCESS);
-                if (success == 1) {
+
+                if (success  == 1) {
+                    String FirstName = json.getString("FirstName");
+                    String userID = json.getString("UserID");
                     Log.d("Login Successful!", json.toString());
                     Intent i = new Intent(MainActivity.this, MainActivity2.class).putExtra("UserName",username);
                     i.putExtra("FirstName",FirstName);
@@ -117,18 +116,15 @@ public class MainActivity extends Activity {
                     SaveSharedPreference.setUserName(getApplication(),username);
                     startActivity(i);
                     return json.getString(TAG_MESSAGE);
-                }else if (success == 0){
-                    Log.d("Login Failure!", json.getString(TAG_MESSAGE));
-                    wrongID.setText("Incorrect E-mail or Password");
-                    wrongID.setTextColor(Color.RED);
-                    wrongID.setVisibility(View.VISIBLE);
+                }else{
                     return json.getString(TAG_MESSAGE);
 
                 }
+
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
             return null;
 
         }
@@ -137,13 +133,18 @@ public class MainActivity extends Activity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             pdialog.dismiss();
-
-            if (s != null){
-
-                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+            if (s != null && s.equals("Invalid Credentials!")){
+                Toast.makeText(getApplicationContext(),s, Toast.LENGTH_LONG).show();
+                wrongID.setText(s);
+                wrongID.setTextColor(Color.RED);
+                wrongID.setVisibility(View.VISIBLE);
+            }else{
+                Toast.makeText(getApplicationContext(),s, Toast.LENGTH_LONG).show();
             }
+
         }
     }
+
 
 
 }

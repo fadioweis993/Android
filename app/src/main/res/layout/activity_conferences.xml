@@ -3,7 +3,6 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:id="@+id/conferences"
     android:orientation="vertical"
-    android:background="#ff79cad6"
     android:weightSum="1">
 
     <ListView

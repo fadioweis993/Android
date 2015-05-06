@@ -210,6 +210,7 @@ public class conferences extends Activity {
                         String userChoose = String.valueOf(conferenceID[position]);
                         Intent intent = new Intent(conferences.this,ConferenceInfo.class).putExtra("confID",userChoose);
                         intent.putExtra("UserID",UserIDD);
+                        intent.putExtra("Visibility",1);
                         startActivity(intent);
 
                     }

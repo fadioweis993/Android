@@ -65,7 +65,21 @@
         android:layout_height="wrap_content"
         android:text="Join"
         android:id="@+id/joinConf"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View comitte"
+        android:id="@+id/committe"
+        android:layout_above="@+id/joinConf"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/joinConf"
+        android:layout_alignEnd="@+id/joinConf" />
 
 </RelativeLayout>

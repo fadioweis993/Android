@@ -3,6 +3,7 @@ package edu.psut.reviconf;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,7 +38,10 @@ public class ConferenceInfo extends Activity {
     private static final String JOIN_CONFERENCE = "http://newfaceapps.site90.com/joinConf.php";
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
+    private static int VISIBILITY = 0;
+    int Visible = 0;
     private Button joinBtn;
+    private Button viewCommitte;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +50,14 @@ public class ConferenceInfo extends Activity {
         ii = getIntent();
         UserID = ii.getStringExtra("UserID");
         joinBtn = (Button) findViewById(R.id.joinConf);
+
+        if (ii.getIntExtra("Visibility",Visible) == 1){
+            VISIBILITY = View.VISIBLE;
+        }else{
+            VISIBILITY = View.INVISIBLE;
+        }
+
+        joinBtn.setVisibility(VISIBILITY);
         joinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,6 +65,7 @@ public class ConferenceInfo extends Activity {
             }
         });
         new getConfInfo().execute();
+        viewCommitte = (Button) findViewById(R.id.committe);
 
     }
 
@@ -107,7 +120,13 @@ public class ConferenceInfo extends Activity {
             confID = i.getStringExtra("confID");
             List<NameValuePair> confInfo = new ArrayList<NameValuePair>();
             confInfo.add(new BasicNameValuePair("confID",confID));
-
+            viewCommitte.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(ConferenceInfo.this,ConfCommitte.class).putExtra("confID",confID);
+                    startActivity(intent);
+                }
+            });
             JSONParser jsonParser = new JSONParser();
             JSONObject json = jsonParser.makeHttpRequest(CONFERENCE_INFO, "POST", confInfo);
 

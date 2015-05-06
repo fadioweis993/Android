@@ -137,6 +137,7 @@ public class MyConferences extends Activity {
                       String userChoose = String.valueOf(confID[position]);
                       Intent intent = new Intent(MyConferences.this,ConferenceInfo.class).putExtra("confID",userChoose);
                       intent.putExtra("UserID",UserID);
+                      intent.putExtra("Visibility",0);
                       startActivity(intent);
 
                   }

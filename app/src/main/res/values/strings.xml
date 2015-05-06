@@ -32,5 +32,6 @@
 
     <string name="contact_birthday">Enter Birthday</string>
         <string name="title_activity_conference_info">ConferenceInfo</string>
+        <string name="title_activity_conf_committe">ConfCommitte</string>
 
 </resources>
