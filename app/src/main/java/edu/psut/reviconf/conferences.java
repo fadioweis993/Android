@@ -36,7 +36,7 @@ import java.util.List;
  */
 public class conferences extends Activity {
     private MenuItem item;
-    private static final String LOGIN_URL = "http://newfaceapps.site90.com/conferences.php";
+    private static String SEARCH_URL;
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
     private static final String TAG_TITLE = "title";
@@ -53,6 +53,7 @@ public class conferences extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conferences);
+        SEARCH_URL = this.getString(R.string.server_name) + "conferences.php";
         getActionBar().setDisplayHomeAsUpEnabled(true);
         Button bttn;
         i = getIntent();
@@ -158,7 +159,7 @@ public class conferences extends Activity {
             confs.add(new BasicNameValuePair("confName",conf));
 
             JSONParser jsonParser = new JSONParser();
-            JSONObject json = jsonParser.makeHttpRequest(LOGIN_URL, "POST", confs);
+            JSONObject json = jsonParser.makeHttpRequest(SEARCH_URL, "POST", confs);
 
             try {
 

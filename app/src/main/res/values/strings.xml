@@ -18,7 +18,7 @@
     <string name="title_activity_conf_results">ConfResults</string>
     <string name="title_activity_conferences">conferences</string>
 
-    <string name = "link_connection">""</string>
+    <string name ="server_name">http://newfaceapps.site90.com/</string>
     <string name="contact_name_hint">Enter Name</string>
     <string name="contact_phone_hint">Enter Phone Number</string>
 

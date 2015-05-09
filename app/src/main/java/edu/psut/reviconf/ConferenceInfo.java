@@ -30,8 +30,8 @@ public class ConferenceInfo extends Activity {
     String confID;
     String UserID;
 
-    private static final String CONFERENCE_INFO = "http://newfaceapps.site90.com/conferenceInfo.php";
-    private static final String JOIN_CONFERENCE = "http://newfaceapps.site90.com/joinConf.php";
+    private static  String CONFERENCE_INFO;
+    private static  String JOIN_CONFERENCE;
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
     private static int VISIBILITY = 0;
@@ -44,6 +44,8 @@ public class ConferenceInfo extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conference_info);
+        CONFERENCE_INFO = this.getString(R.string.server_name) + "conferenceInfo.php";
+        JOIN_CONFERENCE = this.getString(R.string.server_name) + "joinConf.php";
         getActionBar().setDisplayHomeAsUpEnabled(true);
         ii = getIntent();
         UserID = ii.getStringExtra("UserID");

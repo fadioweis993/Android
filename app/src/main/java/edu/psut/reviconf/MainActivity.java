@@ -27,7 +27,7 @@ import java.util.List;
 public class MainActivity extends Activity {
 
     JSONParser jsonParser = new JSONParser();
-    private static final String LOGIN_URL = "http://newfaceapps.site90.com/login.php";
+    private static String LOGIN_URL;
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
     private EditText tv;
@@ -38,8 +38,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
+        LOGIN_URL = this.getString(R.string.server_name) + "login.php";
         tv = (EditText) findViewById(R.id.editText);
         tv2 = (EditText) findViewById(R.id.editText2);
         wrongID = (TextView) findViewById(R.id.wrongID);

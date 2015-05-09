@@ -32,7 +32,7 @@ public class MyProfile extends Activity {
     private ImageView profilePic;
     private Bitmap bitmap;
     private String imgUrl = "https://scontent-fra.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/1385863_10205100205797356_2423613737676426155_n.jpg?oh=166a670103eb9ce756b155de6cded5d0&oe=559E3933";
-    private static final String LOGIN_URL = "http://newfaceapps.site90.com/personalData.php";
+    private static String LOGIN_URL;
     private static final String TAG_MESSAGE = "message";
 
     TextView textToView;
@@ -46,6 +46,7 @@ public class MyProfile extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile);
+        LOGIN_URL = this.getString(R.string.server_name) + "personalData.php";
         getActionBar().setDisplayHomeAsUpEnabled(true);
         new getPersonInfo().execute();
 

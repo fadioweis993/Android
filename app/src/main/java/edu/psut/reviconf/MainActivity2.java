@@ -1,14 +1,18 @@
 package edu.psut.reviconf;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,10 +39,6 @@ import java.net.URL;
 
 public class MainActivity2 extends Activity {
     int backButtonCount;
-    PendingIntent pIntent;
-    NotificationManager manager;
-    Intent resultIntent;
-    private TaskStackBuilder stackBuilder;
     private static String[] Options = {"My Profile","My Conferences","Search a conference and join"};
     Intent intent ;
     private String username;
@@ -47,6 +47,10 @@ public class MainActivity2 extends Activity {
     ImageView img;
     private Bitmap B;
     private String UserID;
+    private NotificationManager mNotificationManager;
+    private int notificationID = 100;
+    private int numMessages = 0;
+
     public static String GET_IMG_URL_FROM_DB = "http://newfaceapps.site90.com/getImg.php";
    private static String IMAGE_URL = "https://scontent-cdg.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/1385863_10205100205797356_2423613737676426155_n.jpg?oh=a585ac6faac5506d418ea299ee949123&oe=55C5C633";//IMAGE_URL;
     @Override
@@ -131,34 +135,30 @@ public class MainActivity2 extends Activity {
 
     }
 
-
-
-
-
-//    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-//    protected void startNotification() {
-//        //Creating Notification Builder
-//        notification = new NotificationCompat.Builder(MainActivity2.this);
-//        //Title for Notification
-//        notification.setContentTitle("RevConf");
-//        //Message in the Notification
-//        notification.setContentText("Welcome " + getIntent().getStringExtra("FirstName"));
-//        //Alert shown when Notification is received
-//        notification.setTicker("welcome " + getIntent().getStringExtra("FirstName"));
-//        //Icon to be set on Notification
-//        notification.setSmallIcon(R.drawable.ic_action_done);
-//        //Creating new Stack Builder
-//        stackBuilder = TaskStackBuilder.create(MainActivity2.this);
-//        stackBuilder.addParentStack(MainActivity.class);
-//        //Intent which is opened when notification is clicked
-//        resultIntent = new Intent(MainActivity2.this, MainActivity.class);
-//        stackBuilder.addNextIntent(resultIntent);
-//        pIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-//        notification.setContentIntent(pIntent);
-//        manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//        manager.notify(0, notification.build());
-//    }
-
+   /* @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    protected void startNotification() {
+       // Creating Notification Builder
+        notification = new NotificationCompat(MainActivity2.this);
+        //Title for Notification
+        notification.setContentTitle("RevConf");
+        //Message in the Notification
+        notification.setContentText("Welcome " + getIntent().getStringExtra("FirstName"));
+        //Alert shown when Notification is received
+        notification.setTicker("welcome " + getIntent().getStringExtra("FirstName"));
+        //Icon to be set on Notification
+        notification.setSmallIcon(R.drawable.ic_action_done);
+        //Creating new Stack Builder
+       stackBuilder = TaskStackBuilder.create(MainActivity2.this);
+        stackBuilder.addParentStack(MainActivity.class);
+        //Intent which is opened when notification is clicked
+        resultIntent = new Intent(MainActivity2.this, MainActivity.class);
+        stackBuilder.addNextIntent(resultIntent);
+        pIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        notification.setContentIntent(pIntent);
+        manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.notify(0, notification.build());
+    }
+*/
 
 class GetImgFromUrl extends AsyncTask<Void,Void,Void>{
     private Bitmap bmp;
@@ -185,6 +185,31 @@ class GetImgFromUrl extends AsyncTask<Void,Void,Void>{
     }
 
 }
+
+    public void notificationForMe (){
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+        mBuilder.setSmallIcon(R.drawable.ic_action_done);
+        mBuilder.setContentTitle("Notification Alert, Click Me!");
+        mBuilder.setContentText("Hi, This is Android Notification Detail!");
+        Intent resultIntent = new Intent(this, MainActivity2.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(MainActivity2.class);
+
+// Adds the Intent that starts the Activity to the top of the stack
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        mBuilder.setContentIntent(resultPendingIntent);
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+// notificationID allows you to update the notification later on.
+        mNotificationManager.notify(notificationID, mBuilder.build());
+    }
+
 
 }
 

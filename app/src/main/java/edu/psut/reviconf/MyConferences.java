@@ -29,7 +29,7 @@ import java.util.List;
 
 public class MyConferences extends Activity {
 
-    private static final String MyConferences_URL = "http://newfaceapps.site90.com/myconferences.php";
+    private static String MyConferences_URL;
     LinearLayout linearLayout;
     String getConfName[];
     String confID[];
@@ -40,6 +40,7 @@ public class MyConferences extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_conferences);
+        MyConferences_URL = this.getString(R.string.server_name) + "myconferences.php";
         getActionBar().setDisplayHomeAsUpEnabled(true);
         new getConferences().execute();
     }
