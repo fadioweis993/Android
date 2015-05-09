@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -166,17 +167,23 @@ public class conferences extends Activity {
                 conferencesToJoin = new String[jsonArray.length()];
                 conferenceID = new int[jsonArray.length()];
                 Log.d("ArraySize",String.valueOf(jsonArray.length()));
-                for (int c = 0; c <= jsonArray.length(); c++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(c);
-                    theLayout = (ListView) findViewById(R.id.listView);
-                    conferencesToJoin[c] = jsonObject.getString("confName");
-                    conferenceID[c] = jsonObject.getInt("confID");
-                    textToView = new TextView(conferences.this);
-                    textToView.setText(conferencesToJoin[c]);
-                    textToView.setTextSize(15);
+                if (jsonArray.length() == 0){
+                    conferencesToJoin.equals(null);
                     run();
+                }else{
+                    for (int c = 0; c < jsonArray.length(); ++c) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(c);
+                        theLayout = (ListView) findViewById(R.id.listView);
+                        conferencesToJoin[c] = jsonObject.getString("confName");
+                        conferenceID[c] = jsonObject.getInt("ID");
+                        textToView = new TextView(conferences.this);
+                        textToView.setText(conferencesToJoin[c]);
+                        textToView.setTextSize(15);
+                        run();
 
+                    }
                 }
+
             }catch (JSONException ee){
                 ee.printStackTrace();
             }

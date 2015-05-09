@@ -112,7 +112,7 @@ public class MyProfile extends Activity {
                     textToView = new TextView(MyProfile.this);
                     textToView.setText("Name: " + jsonObject.getString("FirstName") +" "+ jsonObject.getString("LastName")+ "\n"
                             + "\n" + "E-mail: " + jsonObject.getString("Email") + "\n"
-                            + "\n" + "Scientific Degree: " + jsonObject.getString("scientific_degrees")+ "\n"
+                            + "\n" + "Scientific Degree: " + jsonObject.getString("scientific_degree")+ "\n"
                             + "\n" + "Date of registration: " + jsonObject.getString("date_registered")+ "\n"
                             + "\n" + "City: " + jsonObject.getString("city")+ "\n"
                             + "\n" + "Age: " + jsonObject.getString("Age")

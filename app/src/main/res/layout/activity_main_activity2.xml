@@ -9,25 +9,6 @@
     style="@style/AppTheme"
     android:id="@+id/activity_two">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:background="@android:color/holo_red_light"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/linearLayout">
-
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="249dp"
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/img"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-    </LinearLayout>
-
     <ListView
         android:layout_width="fill_parent"
         android:layout_height="250dp"
@@ -39,5 +20,15 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         />
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="249dp"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/img"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

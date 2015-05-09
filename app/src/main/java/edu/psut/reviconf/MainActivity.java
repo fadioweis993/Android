@@ -39,11 +39,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(SaveSharedPreference.getUserName(MainActivity.this).length() == 0)
-        {
-            Intent i = new Intent(MainActivity.this,MainActivity.class);
-            startActivity(i);
-        }else{
+
         tv = (EditText) findViewById(R.id.editText);
         tv2 = (EditText) findViewById(R.id.editText2);
         wrongID = (TextView) findViewById(R.id.wrongID);
@@ -62,7 +58,7 @@ public class MainActivity extends Activity {
             }
         });
 
-    }
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

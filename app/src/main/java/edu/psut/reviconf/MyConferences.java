@@ -102,7 +102,7 @@ public class MyConferences extends Activity {
                 for (int c=0;c<=jsonArray.length();c++){
                     JSONObject jsonObject = jsonArray.getJSONObject(c);
                     getConfName[c] = jsonObject.getString("confName");
-                    confID[c] = jsonObject.getString("confID");
+                    confID[c] = jsonObject.getString("ID");
                 }
 
             } catch (JSONException e) {
