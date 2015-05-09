@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,12 +29,7 @@ public class ConferenceInfo extends Activity {
     Intent i;
     String confID;
     String UserID;
-    private TextView confName;
-    private TextView confDate;
-    private TextView confSubmitEnd;
-    private TextView confReviewEnd;
-    private TextView introduction;
-    private TextView confCreator;
+
     private static final String CONFERENCE_INFO = "http://newfaceapps.site90.com/conferenceInfo.php";
     private static final String JOIN_CONFERENCE = "http://newfaceapps.site90.com/joinConf.php";
     private static final String TAG_SUCCESS = "success";
@@ -42,6 +38,8 @@ public class ConferenceInfo extends Activity {
     int Visible = 0;
     private Button joinBtn;
     private Button viewCommitte;
+    TextView textToView;
+    LinearLayout ConfeInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,15 +108,10 @@ public class ConferenceInfo extends Activity {
         }
         @Override
         protected String doInBackground(String... params) {
-            confName = (TextView) findViewById(R.id.confName);
-            confDate = (TextView) findViewById(R.id.confDate);
-            confSubmitEnd = (TextView) findViewById(R.id.confSubmitEnd);
-            confReviewEnd = (TextView) findViewById(R.id.confReviewEnd);
-            introduction = (TextView) findViewById(R.id.introduction);
-            confCreator = (TextView) findViewById(R.id.confCreator);
+//
             i = getIntent ();
             confID = i.getStringExtra("confID");
-            List<NameValuePair> confInfo = new ArrayList<NameValuePair>();
+            final List<NameValuePair> confInfo = new ArrayList<NameValuePair>();
             confInfo.add(new BasicNameValuePair("confID",confID));
             viewCommitte.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -131,7 +124,7 @@ public class ConferenceInfo extends Activity {
             JSONObject json = jsonParser.makeHttpRequest(CONFERENCE_INFO, "POST", confInfo);
 
             try {
-              final  String Name = json.getString("confName");
+                final  String Name = json.getString("confName");
                 final  String Date = json.getString("confDate");
                 final String SubmitEnd = json.getString("confSubmitEnd");
                 final String ReviewEnd = json.getString("confReviewEnd");
@@ -141,12 +134,18 @@ public class ConferenceInfo extends Activity {
                 ConferenceInfo.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        confName.setText(Name);
-                        confDate.setText(Date);
-                        confSubmitEnd.setText(SubmitEnd);
-                        confReviewEnd.setText(ReviewEnd);
-                        introduction.setText(Introduction);
-                        confCreator.setText(Creator);
+
+                        textToView = new TextView(ConferenceInfo.this);
+                        textToView.setText("Conference Name: " +Name+ "\n"
+                                        + "\n" + "Conference Date: " + Date + "\n"
+                                        + "\n" + "Submit Paper End-Date: " + SubmitEnd+ "\n"
+                                        + "\n" + "Review End-Date: " + ReviewEnd+ "\n"
+                                        + "\n" + "Creator " + Creator + "\n"
+                                        + "\n" + "Introduction: " + Introduction
+                        );
+                        textToView.setTextSize(20);
+                        ConfeInfo = (LinearLayout) findViewById(R.id.confInfo);
+                        ConfeInfo.addView(textToView);
                     }
                 });
 
@@ -197,7 +196,7 @@ public class ConferenceInfo extends Activity {
             if (success == 1) {
                 Log.d("Joined Successful!", json.toString());
                 try {
-                   return json.getString(TAG_MESSAGE);
+                    return json.getString(TAG_MESSAGE);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

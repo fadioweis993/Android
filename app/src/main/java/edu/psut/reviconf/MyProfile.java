@@ -34,20 +34,14 @@ public class MyProfile extends Activity {
     private String imgUrl = "https://scontent-fra.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/1385863_10205100205797356_2423613737676426155_n.jpg?oh=166a670103eb9ce756b155de6cded5d0&oe=559E3933";
     private static final String LOGIN_URL = "http://newfaceapps.site90.com/personalData.php";
     private static final String TAG_MESSAGE = "message";
-    private TextView fname;
-    private TextView E_mail;
-    private TextView person_title;
-    private TextView address;
-    private TextView Date_registered;
-    private TextView educational_degree;
-    private TextView age;
+
     TextView textToView;
     String PersonalData[];
     LinearLayout personalData;
     int size;
-    int count = 0;
+
      Intent i;
-    private String username ;
+    private String userID ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,18 +96,10 @@ public class MyProfile extends Activity {
         protected Boolean doInBackground(String... params) {
 
             try {
-
-                /*fname = (TextView) findViewById(R.id.fname);
-                E_mail = (TextView) findViewById(R.id.E_mail);
-                person_title = (TextView) findViewById(R.id.person_title);
-                address = (TextView) findViewById(R.id.Address);
-                Date_registered = (TextView) findViewById(R.id.date_registered);
-                educational_degree = (TextView) findViewById(R.id.Educational_Degree);
-                age = (TextView) findViewById(R.id.age);*/
                 i = getIntent();
-                username = i.getStringExtra("username");
+                userID = i.getStringExtra("userID");
                 List<NameValuePair> personalInfo = new ArrayList<NameValuePair>();
-                personalInfo.add(new BasicNameValuePair("Email",username));
+                personalInfo.add(new BasicNameValuePair("userID",userID));
 
                 JSONParser jsonParser = new JSONParser();
                 JSONObject json = jsonParser.makeHttpRequest(LOGIN_URL, "POST", personalInfo);
@@ -136,32 +122,6 @@ public class MyProfile extends Activity {
                 }
 
                 Log.d("JSON_I_GOT",json.toString());
-
-                /*final String Title = json.getString("Title");
-                final String Age = json.getString("Age");
-                final String Address = json.getString("Address");
-                final String Email = json.getString("E-mail");
-                final String Educational_Degree = json.getString("Educational_Degree");
-                final  String date_registered = json.getString("date_registered");
-                final  String f_name = json.getString("f_name");
-                final  String l_name = json.getString("l_name");
-*/
-               /* MyProfile.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        fname.setText(f_name + " " + l_name);
-                        E_mail.setText(Email);
-                        person_title.setText(Title);
-                        address.setText(Address);
-                        Date_registered.setText(date_registered);
-                        educational_degree.setText(Educational_Degree);
-                        age.setText(Age);
-                    }
-                });
-*/
-
-
-
 
                 return true;
 

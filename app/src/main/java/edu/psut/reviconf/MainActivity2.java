@@ -80,6 +80,7 @@ public class MainActivity2 extends Activity {
                 switch (position){
                     case 0://My profile
                         Intent intent = new Intent(MainActivity2.this,MyProfile.class).putExtra("username",username);
+                        intent.putExtra("userID",UserID);
                         startActivity(intent);
                         break;
                     case 1://my conferences

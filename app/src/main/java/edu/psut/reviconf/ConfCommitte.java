@@ -1,6 +1,7 @@
 package edu.psut.reviconf;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,7 +46,8 @@ public class ConfCommitte extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(ConfCommitte.this, "You Clicked at " + web[+position], Toast.LENGTH_SHORT).show();
+               Intent i = new Intent (ConfCommitte.this,MyProfile.class);
+                startActivity(i);
 
             }
         });
