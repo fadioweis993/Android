@@ -4,13 +4,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import org.json.JSONArray;
+
 /**
  * Created by Oweis on 1/5/2015.
  */
 public class SaveSharedPreference {
 
-    static final String PREF_USER_NAME= "username";
-
+    static final String PREF_USER_NAME = "username";
+    static JSONArray jsonArr;
     static SharedPreferences getSharedPreferences(Context ctx) {
         return PreferenceManager.getDefaultSharedPreferences(ctx);
     }
@@ -26,4 +28,16 @@ public class SaveSharedPreference {
     {
         return getSharedPreferences(ctx).getString(PREF_USER_NAME, "");
     }
+
+    public static void setJsonArr(Context ctx, JSONArray jsonArray)
+    {
+
+        jsonArr = jsonArray;
+    }
+
+    public static JSONArray getJsonArr(Context ctx)
+    {
+      return jsonArr;
+    }
+
 }

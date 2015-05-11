@@ -10,16 +10,13 @@
     android:id="@+id/activity_two">
 
     <ListView
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="250dp"
         android:id="@+id/MainOptions"
         android:cacheColorHint="#ff000000"
         android:textColor="#ff000000"
-        android:clickable="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        />
+        android:clickable="false"
+        android:layout_below="@+id/img" />
 
     <ImageView
         android:layout_width="fill_parent"

@@ -12,8 +12,8 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,15 +23,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.parse.Parse;
-import com.parse.ParseBroadcastReceiver;
-import com.parse.ParseException;
-import com.parse.ParseInstallation;
-import com.parse.ParsePush;
-import com.parse.ParsePushBroadcastReceiver;
-import com.parse.PushService;
-import com.parse.SaveCallback;
 import java.io.InputStream;
 import java.net.URL;
 
@@ -49,7 +40,6 @@ public class MainActivity2 extends Activity {
     private String UserID;
     private NotificationManager mNotificationManager;
     private int notificationID = 100;
-    private int numMessages = 0;
 
     public static String GET_IMG_URL_FROM_DB = "http://newfaceapps.site90.com/getImg.php";
    private static String IMAGE_URL = "https://scontent-cdg.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/1385863_10205100205797356_2423613737676426155_n.jpg?oh=a585ac6faac5506d418ea299ee949123&oe=55C5C633";//IMAGE_URL;
@@ -58,13 +48,16 @@ public class MainActivity2 extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_activity2);
         //startNotification();
+
+
+        notificationForMe();
+
+        
         intent = getIntent();
         username = intent.getStringExtra("UserName");
         UserID = intent.getStringExtra("UserID");
         OptionsToSelect = (ListView) findViewById(R.id.MainOptions);
-
-
-        if(SaveSharedPreference.getUserName(MainActivity2.this).length() == 0)
+        if(SaveSharedPreference.getUserName(MainActivity2.this).equals(null))
         {
             Intent i = new Intent(MainActivity2.this,MainActivity.class);
             startActivity(i);
@@ -86,6 +79,7 @@ public class MainActivity2 extends Activity {
                         Intent intent = new Intent(MainActivity2.this,MyProfile.class).putExtra("username",username);
                         intent.putExtra("userID",UserID);
                         startActivity(intent);
+
                         break;
                     case 1://my conferences
                         Intent intent1 = new Intent(MainActivity2.this,MyConferences.class).putExtra("UserID",UserID);
@@ -185,16 +179,19 @@ class GetImgFromUrl extends AsyncTask<Void,Void,Void>{
     }
 
 }
-
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public void notificationForMe (){
+        notificationID++;
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
-        mBuilder.setSmallIcon(R.drawable.ic_action_done);
-        mBuilder.setContentTitle("Notification Alert, Click Me!");
-        mBuilder.setContentText("Hi, This is Android Notification Detail!");
-        Intent resultIntent = new Intent(this, MainActivity2.class);
+        mBuilder.setSmallIcon(R.drawable.revconf);
+        mBuilder.setContentTitle("Welcome");
+        mBuilder.setContentText(getIntent().getStringExtra("FirstName"));
+        String username = SaveSharedPreference.getUserName(getApplicationContext());
+        Intent resultIntent = new Intent(MainActivity2.this, MainActivity2.class).putExtra("UserID", username);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        stackBuilder.addParentStack(MainActivity2.class);
-
+        stackBuilder.addParentStack(MainActivity.class);
+      mBuilder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
+        mBuilder.setVibrate(new long[]{1000, 1000});
 // Adds the Intent that starts the Activity to the top of the stack
         stackBuilder.addNextIntent(resultIntent);
         PendingIntent resultPendingIntent =

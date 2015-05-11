@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>    
+    <color name="conf_yellow">#fec500</color>
+    <color name="conf_purple">#653090</color>
+    <color name="conf_gray">#d8e2e6</color>
+    <color name="menu_light_gray">#e6c6c4bc</color>
+    <color name="menu_dark_gray">#e6aeb3b7</color>
+    <color name="lecture">#ffe400</color>
+    <color name="workshop">#fabc02</color>
+    <color name="debate">#fb9902</color>
+    <color name="other">#fe2712</color>
+</resources>

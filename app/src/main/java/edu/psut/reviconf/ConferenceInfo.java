@@ -3,7 +3,6 @@ package edu.psut.reviconf;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,6 +39,10 @@ public class ConferenceInfo extends Activity {
     private Button viewCommitte;
     TextView textToView;
     LinearLayout ConfeInfo;
+    TextView tvName;
+    TextView tvDate;
+    TextView place;
+    TextView introduction;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,22 +135,31 @@ public class ConferenceInfo extends Activity {
                 final String ReviewEnd = json.getString("confReviewEnd");
                 final String Introduction =  json.getString("introduction");
                 final String Creator = json.getString("confCreator");
+                final String Location = json.getString("Location");
 
                 ConferenceInfo.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
 
                         textToView = new TextView(ConferenceInfo.this);
-                        textToView.setText("Conference Name: " +Name+ "\n"
-                                        + "\n" + "Conference Date: " + Date + "\n"
-                                        + "\n" + "Submit Paper End-Date: " + SubmitEnd+ "\n"
-                                        + "\n" + "Review End-Date: " + ReviewEnd+ "\n"
+                        textToView.setText(
+
+                                "\n" + "Submit Paper End-Date: " + SubmitEnd + "\n"
+                                        + "\n" + "Review End-Date: " + ReviewEnd + "\n"
                                         + "\n" + "Creator " + Creator + "\n"
                                         + "\n" + "Introduction: " + Introduction
                         );
                         textToView.setTextSize(20);
-                        ConfeInfo = (LinearLayout) findViewById(R.id.confInfo);
-                        ConfeInfo.addView(textToView);
+                        //ConfeInfo = (LinearLayout) findViewById(R.id.confInfo);
+                        //ConfeInfo.addView(textToView);
+                        tvName = (TextView) findViewById(R.id.tv_title);
+                        tvDate = (TextView) findViewById(R.id.tv_time);
+                        place = (TextView) findViewById(R.id.tv_place_name);
+                        introduction = (TextView) findViewById(R.id.tv_introduction);
+                        tvName.setText(Name);
+                        tvDate.setText(Date);
+                        place.setText(Location);
+                        introduction.setText(Introduction);
                     }
                 });
 

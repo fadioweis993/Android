@@ -33,5 +33,67 @@
     <string name="contact_birthday">Enter Birthday</string>
         <string name="title_activity_conference_info">ConferenceInfo</string>
         <string name="title_activity_conf_committe">ConfCommitte</string>
+    <string name="drawer_open"/>
 
+    <string name="drawer_close"/>
+
+    <string name="empty"/>
+
+    <string name="speaker">Speaker</string>
+
+    <string name="rss_error">RSS error. Try again later</string>
+
+    <string name="network_unavailable">Network connection is unavailable</string>
+
+    <string name="place">Place</string>
+
+    <string name="rating">Rating</string>
+
+    <string name="rating_lecture">Rate lecture</string>
+
+    <string name="rating_text">Lecture rated (%.2f)</string>
+
+    <string name="lectures">Lectures</string>
+
+
+    -<string-array name="days_of_week">
+
+    <item>SUN</item>
+
+    <item>MON</item>
+
+    <item>TUE</item>
+
+    <item>WEN</item>
+
+    <item>THU</item>
+
+    <item>FRI</item>
+
+    <item>SAT</item>
+
+</string-array>
+
+
+    -<string-array name="navigation_items">
+
+    <item>News - RSS</item>
+
+    <item>Twitter - feed</item>
+
+    <item>Agenda</item>
+
+    <item>My plan</item>
+
+    <item>Speakers</item>
+
+    <item>Sponsors</item>
+
+    <item>Locations</item>
+
+    <item>Scan QR code</item>
+
+    <item>About conference</item>
+
+</string-array>
 </resources>

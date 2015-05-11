@@ -108,7 +108,7 @@ public class MainActivity extends Activity {
                     Intent i = new Intent(MainActivity.this, MainActivity2.class).putExtra("UserName",username);
                     i.putExtra("FirstName",FirstName);
                     i.putExtra("UserID",userID);
-                    SaveSharedPreference.setUserName(getApplication(),username);
+                    SaveSharedPreference.setUserName(getApplicationContext(),String.valueOf(userID));
                     startActivity(i);
                     return json.getString(TAG_MESSAGE);
                 }else{
