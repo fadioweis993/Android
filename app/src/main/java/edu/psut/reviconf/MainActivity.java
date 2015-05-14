@@ -1,11 +1,11 @@
 package edu.psut.reviconf;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends ActionBarActivity {
 
     JSONParser jsonParser = new JSONParser();
     private static String LOGIN_URL;
@@ -34,6 +34,7 @@ public class MainActivity extends Activity {
     private EditText tv2;
     TextView wrongID;
     int success = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

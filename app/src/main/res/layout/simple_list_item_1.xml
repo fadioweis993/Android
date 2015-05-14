@@ -8,8 +8,5 @@
     android:textAppearance="?android:attr/textAppearanceListItem"
     android:gravity="center_vertical"
     android:textColor="#ff000000"
-    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
-    android:background="#ffc5c2c2"
-    android:clickable="false" />
-
+     />

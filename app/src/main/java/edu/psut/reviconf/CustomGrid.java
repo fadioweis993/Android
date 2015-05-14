@@ -13,8 +13,8 @@ import android.widget.TextView;
 
 public class CustomGrid extends BaseAdapter{
     private Context mContext;
-    private final String[] web;
-    private final int[] Imageid;
+    private  String[] web;
+    private  int[] Imageid;
 
     public CustomGrid(Context c,String[] web,int[] Imageid ) {
         mContext = c;

@@ -21,10 +21,12 @@
         android:allowBackup="true"
         android:icon="@mipmap/revconf"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,7 +35,8 @@
         </activity>
         <activity
             android:name=".conferences"
-            android:label="Conferences" >
+            android:label="Conferences"
+            >
         </activity>
         <activity
             android:name=".MyProfile"

@@ -18,7 +18,6 @@ public class Notification extends Application {
     public void onCreate() {
         super.onCreate();
 
-
         Parse.initialize(getApplicationContext(), "Xx6QvGexra9Iumj5bTJoF7eshTPcvdgDpUpKzKUL", "Kf2h8zxdWD3r1SDU2Wf6Qv8WZxISFED33mwNMKW9");
         ParseInstallation.getCurrentInstallation().saveInBackground();
 

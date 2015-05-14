@@ -1,12 +1,10 @@
 package edu.psut.reviconf;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.PixelFormat;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.apache.http.NameValuePair;
@@ -27,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MyConferences extends Activity {
+public class MyConferences extends ActionBarActivity {
 
     private static String MyConferences_URL;
     LinearLayout linearLayout;
@@ -41,7 +38,8 @@ public class MyConferences extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_conferences);
         MyConferences_URL = this.getString(R.string.server_name) + "myconferences.php";
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        //getActionBar().setDisplayHomeAsUpEnabled(true);
+       getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         new getConferences().execute();
     }
 
@@ -100,6 +98,11 @@ public class MyConferences extends Activity {
                 JSONArray jsonArray = json.getJSONArray("confName");
                 getConfName = new String[jsonArray.length()];
                 confID = new String[jsonArray.length()];
+                if (jsonArray.length() == 0){
+                    TextView tv = new TextView(getApplicationContext());
+                    tv.setText("You don't have any conferences yet ...");
+                    linearLayout.addView(tv);
+                }
                 for (int c=0;c<=jsonArray.length();c++){
                     JSONObject jsonObject = jsonArray.getJSONObject(c);
                     getConfName[c] = jsonObject.getString("confName");

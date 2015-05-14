@@ -1,12 +1,12 @@
 package edu.psut.reviconf;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,12 +26,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MyProfile extends Activity {
+public class MyProfile extends ActionBarActivity {
     private ImageView profilePic;
     private Bitmap bitmap;
-    private String imgUrl = "https://scontent-fra.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/1385863_10205100205797356_2423613737676426155_n.jpg?oh=166a670103eb9ce756b155de6cded5d0&oe=559E3933";
+    public static String GET_IMG_URL_FROM_DB;
+    private static String IMAGE_URL;
     private static String LOGIN_URL;
-    private static final String TAG_MESSAGE = "message";
     private JSONArray jsonArray;
     String FirstName;
     String LastName;
@@ -51,9 +51,12 @@ public class MyProfile extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_my_profile);
         LOGIN_URL = this.getString(R.string.server_name) + "personalData.php";
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        GET_IMG_URL_FROM_DB = this.getString(R.string.server_name) + "getImg.php";
+        //getActionBar().setDisplayHomeAsUpEnabled(true);
+
         Log.d("FLAG",String.valueOf(FLAG));
         Intent intent = getIntent();
         userName = intent.getStringExtra("username");
@@ -71,10 +74,12 @@ public class MyProfile extends Activity {
 
 
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         return true;
     }
 
@@ -120,13 +125,24 @@ public class MyProfile extends Activity {
                 List<NameValuePair> personalInfo = new ArrayList<NameValuePair>();
                 personalInfo.add(new BasicNameValuePair("userID",userID));
 
+                List<NameValuePair> imgFromDB = new ArrayList<NameValuePair>();
+                imgFromDB.add(new BasicNameValuePair("userID",userID));
+
                 JSONParser jsonParser = new JSONParser();
                 JSONObject json = jsonParser.makeHttpRequest(LOGIN_URL, "POST", personalInfo);
-                jsonArray = json.getJSONArray("personalData");
+
+                JSONParser jsonParser1 = new JSONParser();
+                JSONObject jsonObject1 = new JSONObject();
+                jsonObject1 = jsonParser1.makeHttpRequest(GET_IMG_URL_FROM_DB, "POST", imgFromDB);
+               jsonArray = json.getJSONArray("personalData");
+
+                IMAGE_URL = jsonObject1.getString("URL");
+                IMAGE_URL.replace('\\', '/');
+                Log.d("STRING",IMAGE_URL);
                 SaveSharedPreference.setJsonArr(getApplicationContext(),jsonArray);
                 size = jsonArray.length();
                 textToView = (TextView) findViewById(R.id.tv_description);
-                for (int c=0;c<=jsonArray.length();c++){
+                for (int c=0;c<jsonArray.length();c++){
                     JSONObject jsonObject = jsonArray.getJSONObject(c);
                     FirstName = jsonObject.getString("FirstName");
                     LastName = jsonObject.getString("LastName");
@@ -142,7 +158,9 @@ public class MyProfile extends Activity {
                                     + "\n" + "Scientific Degree: " + scientific_degree + "\n"
                                     + "\n" + "Date of registration: " + date_registered + "\n"
                                     + "\n" + "City: " + city + "\n"
-                                    + "\n" + "Age: " + Age
+                                    + "\n" + "Age: " + Age + "\n"
+
+
                     );
 
                     run();
@@ -202,7 +220,7 @@ public class MyProfile extends Activity {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                InputStream in = new URL(imgUrl).openStream();
+                InputStream in = new URL(IMAGE_URL).openStream();
                 bmp = BitmapFactory.decodeStream(in);
 
 

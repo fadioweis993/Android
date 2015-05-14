@@ -1,16 +1,15 @@
 package edu.psut.reviconf;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ConferenceInfo extends Activity {
+public class ConferenceInfo extends ActionBarActivity {
     Intent ii;
     Intent i;
     String confID;
@@ -36,20 +35,20 @@ public class ConferenceInfo extends Activity {
     private static int VISIBILITY = 0;
     int Visible = 0;
     private Button joinBtn;
-    private Button viewCommitte;
     TextView textToView;
-    LinearLayout ConfeInfo;
     TextView tvName;
     TextView tvDate;
     TextView place;
     TextView introduction;
+    TextView tvDates;
+    TextView confCreator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conference_info);
         CONFERENCE_INFO = this.getString(R.string.server_name) + "conferenceInfo.php";
         JOIN_CONFERENCE = this.getString(R.string.server_name) + "joinConf.php";
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        //getActionBar().setDisplayHomeAsUpEnabled(true);
         ii = getIntent();
         UserID = ii.getStringExtra("UserID");
         joinBtn = (Button) findViewById(R.id.joinConf);
@@ -68,7 +67,6 @@ public class ConferenceInfo extends Activity {
             }
         });
         new getConfInfo().execute();
-        viewCommitte = (Button) findViewById(R.id.committe);
 
     }
 
@@ -113,18 +111,12 @@ public class ConferenceInfo extends Activity {
         }
         @Override
         protected String doInBackground(String... params) {
-//
+
             i = getIntent ();
             confID = i.getStringExtra("confID");
-            final List<NameValuePair> confInfo = new ArrayList<NameValuePair>();
+            List<NameValuePair> confInfo = new ArrayList<NameValuePair>();
             confInfo.add(new BasicNameValuePair("confID",confID));
-            viewCommitte.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(ConferenceInfo.this,ConfCommitte.class).putExtra("confID",confID);
-                    startActivity(intent);
-                }
-            });
+
             JSONParser jsonParser = new JSONParser();
             JSONObject json = jsonParser.makeHttpRequest(CONFERENCE_INFO, "POST", confInfo);
 
@@ -140,26 +132,19 @@ public class ConferenceInfo extends Activity {
                 ConferenceInfo.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
-                        textToView = new TextView(ConferenceInfo.this);
-                        textToView.setText(
-
-                                "\n" + "Submit Paper End-Date: " + SubmitEnd + "\n"
-                                        + "\n" + "Review End-Date: " + ReviewEnd + "\n"
-                                        + "\n" + "Creator " + Creator + "\n"
-                                        + "\n" + "Introduction: " + Introduction
-                        );
-                        textToView.setTextSize(20);
-                        //ConfeInfo = (LinearLayout) findViewById(R.id.confInfo);
-                        //ConfeInfo.addView(textToView);
                         tvName = (TextView) findViewById(R.id.tv_title);
                         tvDate = (TextView) findViewById(R.id.tv_time);
                         place = (TextView) findViewById(R.id.tv_place_name);
                         introduction = (TextView) findViewById(R.id.tv_introduction);
+                        tvDates = (TextView) findViewById(R.id.ConfDate);
+                        confCreator = (TextView) findViewById(R.id.tv_description);
                         tvName.setText(Name);
                         tvDate.setText(Date);
                         place.setText(Location);
                         introduction.setText(Introduction);
+                        tvDates.setText("Submit Paper End-Date: " + SubmitEnd
+                                + "\n" + "Review Papers End-Date: " + ReviewEnd );
+                        confCreator.setText(Creator);
                     }
                 });
 
@@ -221,7 +206,7 @@ public class ConferenceInfo extends Activity {
                 }
             }else{
                 try {
-                    Log.d("Login Failure!", json.getString(TAG_MESSAGE));
+                    Log.d("Join Failure!", json.getString(TAG_MESSAGE));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

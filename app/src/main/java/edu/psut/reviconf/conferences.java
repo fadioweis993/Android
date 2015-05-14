@@ -1,11 +1,11 @@
 package edu.psut.reviconf;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,10 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +31,7 @@ import java.util.List;
 /**
  * Created by Oweis on 15/3/2015.
  */
-public class conferences extends Activity {
+public class conferences extends ActionBarActivity {
     private MenuItem item;
     private static String SEARCH_URL;
     private static final String TAG_SUCCESS = "success";
@@ -54,7 +51,8 @@ public class conferences extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conferences);
         SEARCH_URL = this.getString(R.string.server_name) + "conferences.php";
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        //getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         Button bttn;
         i = getIntent();
         UserIDD = i.getStringExtra("UserID");
@@ -72,7 +70,7 @@ public class conferences extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main_activity2, menu);
+        getMenuInflater().inflate(R.menu.menu_my_conferences, menu);
         return true;
     }
 

@@ -9,23 +9,14 @@
     style="@style/AppTheme"
     android:id="@+id/activity_two">
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="250dp"
-        android:id="@+id/MainOptions"
-        android:cacheColorHint="#ff000000"
-        android:textColor="#ff000000"
-        android:clickable="false"
-        android:layout_below="@+id/img" />
 
-    <ImageView
+    <GridView
+        android:numColumns="auto_fit"
+        android:gravity="center"
+        android:columnWidth="100dp"
+        android:stretchMode="columnWidth"
         android:layout_width="fill_parent"
-        android:layout_height="249dp"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/img"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
+        android:layout_height="fill_parent"
+        android:id="@+id/grid"
+        />
 </RelativeLayout>

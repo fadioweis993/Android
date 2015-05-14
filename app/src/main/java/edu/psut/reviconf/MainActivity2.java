@@ -1,62 +1,44 @@
 package edu.psut.reviconf;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.GridView;
 import android.widget.Toast;
 
-import java.io.InputStream;
-import java.net.URL;
 
-
-
-public class MainActivity2 extends Activity {
+public class MainActivity2 extends ActionBarActivity {
     int backButtonCount;
     private static String[] Options = {"My Profile","My Conferences","Search a conference and join"};
+    private int[] imageId = {R.drawable.menu_speakers_normal,R.drawable.menu_agenda_normal,R.drawable.menu_about_normal};
     Intent intent ;
     private String username;
-    ListView OptionsToSelect;
-    ArrayAdapter<String> adapter;
-    ImageView img;
-    private Bitmap B;
+    GridView OptionsToSelect;
     private String UserID;
     private NotificationManager mNotificationManager;
     private int notificationID = 100;
-
-    public static String GET_IMG_URL_FROM_DB = "http://newfaceapps.site90.com/getImg.php";
-   private static String IMAGE_URL = "https://scontent-cdg.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/1385863_10205100205797356_2423613737676426155_n.jpg?oh=a585ac6faac5506d418ea299ee949123&oe=55C5C633";//IMAGE_URL;
-    @Override
+        @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_activity2);
         //startNotification();
 
-
-        notificationForMe();
-
-        
         intent = getIntent();
         username = intent.getStringExtra("UserName");
         UserID = intent.getStringExtra("UserID");
-        OptionsToSelect = (ListView) findViewById(R.id.MainOptions);
+
         if(SaveSharedPreference.getUserName(MainActivity2.this).equals(null))
         {
             Intent i = new Intent(MainActivity2.this,MainActivity.class);
@@ -65,11 +47,9 @@ public class MainActivity2 extends Activity {
 
 
 
-        img = (ImageView) findViewById(R.id.img);
-        new GetImgFromUrl().execute();
-
-
-        adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.simple_list_item_1,Options);
+       //adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.grid_single,Options);
+       CustomGrid adapter = new CustomGrid(MainActivity2.this, Options, imageId);
+            OptionsToSelect = (GridView) findViewById(R.id.grid);
         OptionsToSelect.setAdapter(adapter);
         OptionsToSelect.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -116,14 +96,17 @@ public class MainActivity2 extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main_activity2, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
+        if (id == R.id.action_logout){
+            SaveSharedPreference.setUserName(getApplicationContext(),"");
+            finish();
+        }
                 return super.onOptionsItemSelected(item);
 
 
@@ -154,31 +137,8 @@ public class MainActivity2 extends Activity {
     }
 */
 
-class GetImgFromUrl extends AsyncTask<Void,Void,Void>{
-    private Bitmap bmp;
-    @Override
-    protected Void doInBackground(Void... params) {
-        try {
-            InputStream in = new URL(IMAGE_URL).openStream();
-            bmp = BitmapFactory.decodeStream(in);
 
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-    @Override
-    protected void onPostExecute(Void result) {
-        if (bmp != null){
-            img.setImageBitmap(bmp);
-            img.getLayoutParams().width = 350;
-            img.getLayoutParams().height = 350;
-
-        }
-    }
-
-}
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public void notificationForMe (){
         notificationID++;

@@ -22,8 +22,8 @@
 
     <com.mikhaellopez.circularimageview.CircularImageView
         android:id="@+id/iv_speaker_photo"
-        android:layout_width="@dimen/big_image_size"
-        android:layout_height="@dimen/big_image_size"
+        android:layout_width="150dp"
+        android:layout_height="170dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
@@ -41,6 +41,11 @@
 
     <TextView
         android:id="@+id/tv_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@android:style/TextAppearance.Small" />
+    <TextView
+        android:id="@+id/tv_aboutMe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="@android:style/TextAppearance.Small" />

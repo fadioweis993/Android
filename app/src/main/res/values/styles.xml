@@ -1,10 +1,19 @@
-<resources>
+<?xml version="1.0"?>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    </style>
+    <style parent="Theme.AppCompat.Light.DarkActionBar" name="AppTheme">
+
+    <item name="actionBarStyle">@style/CustomActionBar</item>
+
+</style>
+
+
+    <style parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse" name="CustomActionBar">
+
+    <item name="background">@color/conf_purple</item>
+    <item name="android:homeAsUpIndicator">@drawable/revconf</item>
+</style>
 
 </resources>
