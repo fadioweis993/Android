@@ -48,6 +48,8 @@ public class MyProfile extends ActionBarActivity {
      Intent i;
     private String userID ;
     private String userName;
+    ConnectionDetector cd;
+    AlertDialogManager alert = new AlertDialogManager();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,16 +62,28 @@ public class MyProfile extends ActionBarActivity {
         Log.d("FLAG",String.valueOf(FLAG));
         Intent intent = getIntent();
         userName = intent.getStringExtra("username");
+        cd = new ConnectionDetector(getApplicationContext());
 
-        if (FLAG != 1){
+        // Check if Internet present
+        if (!cd.isConnectingToInternet()) {
+            // Internet Connection is not present
+            alert.showAlertDialog(MyProfile.this,
+                    "Internet Connection Error",
+                    "Please connect to working Internet connection", false);
+            // stop executing code by return
+            return;
+        }else if (FLAG != 1){
             FLAG++;
             new getPersonInfo().execute();
+            profilePic = (ImageView) findViewById(R.id.iv_speaker_photo);
+            new GetImgFromUrl().execute();
         }else{
             setData();
+            profilePic = (ImageView) findViewById(R.id.iv_speaker_photo);
+            new GetImgFromUrl().execute();
         }
 
-        profilePic = (ImageView) findViewById(R.id.iv_speaker_photo);
-       new GetImgFromUrl().execute();
+
     }
 
 
@@ -139,7 +153,7 @@ public class MyProfile extends ActionBarActivity {
                 IMAGE_URL = jsonObject1.getString("URL");
                 IMAGE_URL.replace('\\', '/');
                 Log.d("STRING",IMAGE_URL);
-                SaveSharedPreference.setJsonArr(getApplicationContext(),jsonArray);
+                //SaveSharedPreference.setJsonArr(getApplicationContext(),jsonArray);
                 size = jsonArray.length();
                 textToView = (TextView) findViewById(R.id.tv_description);
                 for (int c=0;c<jsonArray.length();c++){

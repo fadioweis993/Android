@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -28,11 +29,13 @@ public class MyConferences extends ActionBarActivity {
 
     private static String MyConferences_URL;
     LinearLayout linearLayout;
-    String getConfName[];
-    String confID[];
+    String getConfName[] = {};
+    String confID[] = {};
     ArrayAdapter<String> adapter;
     ListView theLayout2;
     String UserID;
+    ConnectionDetector cd;
+    AlertDialogManager alert = new AlertDialogManager();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +43,20 @@ public class MyConferences extends ActionBarActivity {
         MyConferences_URL = this.getString(R.string.server_name) + "myconferences.php";
         //getActionBar().setDisplayHomeAsUpEnabled(true);
        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
-        new getConferences().execute();
+        cd = new ConnectionDetector(getApplicationContext());
+
+        // Check if Internet present
+        if (!cd.isConnectingToInternet()) {
+            // Internet Connection is not present
+            alert.showAlertDialog(MyConferences.this,
+                    "Internet Connection Error",
+                    "Please connect to working Internet connection", false);
+            // stop executing code by return
+            return;
+        }else{
+            new getConferences().execute();
+        }
+
     }
 
 
@@ -99,11 +115,20 @@ public class MyConferences extends ActionBarActivity {
                 getConfName = new String[jsonArray.length()];
                 confID = new String[jsonArray.length()];
                 if (jsonArray.length() == 0){
-                    TextView tv = new TextView(getApplicationContext());
-                    tv.setText("You don't have any conferences yet ...");
-                    linearLayout.addView(tv);
+                    MyConferences.this.runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            TextView tv = new TextView(getApplicationContext());
+                            tv.setText("You don't have any conferences yet ...");
+                            tv.setTextColor(getResources().getColor(R.color.conf_purple));
+                            tv.setTextSize(20);
+                            linearLayout.addView(tv);
+                        }
+                    });
+
                 }
-                for (int c=0;c<=jsonArray.length();c++){
+                for (int c=0;c<jsonArray.length();c++){
                     JSONObject jsonObject = jsonArray.getJSONObject(c);
                     getConfName[c] = jsonObject.getString("confName");
                     confID[c] = jsonObject.getString("ID");
@@ -111,6 +136,7 @@ public class MyConferences extends ActionBarActivity {
 
             } catch (JSONException e) {
                 e.printStackTrace();
+                Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
             }
 
 
@@ -146,6 +172,7 @@ public class MyConferences extends ActionBarActivity {
 
                   }
               });
+
 
             }
         });

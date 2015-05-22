@@ -42,6 +42,8 @@ public class ConferenceInfo extends ActionBarActivity {
     TextView introduction;
     TextView tvDates;
     TextView confCreator;
+    ConnectionDetector cd;
+    AlertDialogManager alert = new AlertDialogManager();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +65,20 @@ public class ConferenceInfo extends ActionBarActivity {
         joinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new joinConf().execute();
+                cd = new ConnectionDetector(getApplicationContext());
+
+                // Check if Internet present
+                if (!cd.isConnectingToInternet()) {
+                    // Internet Connection is not present
+                    alert.showAlertDialog(ConferenceInfo.this,
+                            "Internet Connection Error",
+                            "Please connect to working Internet connection", false);
+                    // stop executing code by return
+                    return;
+                }else{
+                    new joinConf().execute();
+                }
+
             }
         });
         new getConfInfo().execute();

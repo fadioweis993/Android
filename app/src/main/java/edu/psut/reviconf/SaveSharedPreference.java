@@ -35,9 +35,5 @@ public class SaveSharedPreference {
         jsonArr = jsonArray;
     }
 
-    public static JSONArray getJsonArr(Context ctx)
-    {
-      return jsonArr;
-    }
 
 }

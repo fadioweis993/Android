@@ -37,46 +37,6 @@ public class JSONParser {
 
     }
 
-    public JSONObject getJsonFromUrl(String url){
-
-        try{
-            DefaultHttpClient httpclient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost();
-
-            HttpResponse httpresponse = httpclient.execute(httpPost);
-            HttpEntity httpEntity = httpresponse.getEntity();
-
-            is = httpEntity.getContent();
-
-        }catch (UnsupportedEncodingException e){
-            e.printStackTrace();
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try{
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-            StringBuilder sb = new StringBuilder();
-            String line = null;
-            while((line = reader.readLine()) != null){
-                sb.append(line + "\n");
-            }
-            is.close();
-            json = sb.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try{
-            jObj = new JSONObject(json);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return jObj;
-    }
-
     // function get json from url
     // by making HTTP POST or GET mehtod
     public JSONObject makeHttpRequest(String url, String method, List<NameValuePair> params) {

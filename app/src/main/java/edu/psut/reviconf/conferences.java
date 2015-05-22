@@ -46,6 +46,8 @@ public class conferences extends ActionBarActivity {
     private String UserIDD;
     Intent i;
     ArrayAdapter<String> adapter;
+    ConnectionDetector cd;
+    AlertDialogManager alert = new AlertDialogManager();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +62,18 @@ public class conferences extends ActionBarActivity {
         bttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new searchConf().execute();
+                cd = new ConnectionDetector(getApplicationContext());
+                if (!cd.isConnectingToInternet()) {
+                    // Internet Connection is not present
+                    alert.showAlertDialog(conferences.this,
+                            "Internet Connection Error",
+                            "Please connect to working Internet connection", false);
+                    // stop executing code by return
+                    return;
+                }else{
+                    new searchConf().execute();
+                }
+
             }
         });
 
